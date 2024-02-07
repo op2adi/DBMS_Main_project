@@ -101,3 +101,30 @@ create table Hotel_Invouice(
     FOREIGN KEY (Hote_Id) references Hotels(Hotel_id),
     FOREIGN KEY (Userid) references Users(userid)
 );
+
+create table Payments(
+    Payment_Id INT PRIMARY KEY ,
+    User_id INT Not NULL ,
+    Ticket_id INT  , -- can be null its constraints and need and optimization is explained later will explain in pdf
+    Payment_Status Char(1) Not Null , -- Giving 0 and 1 like payment done or not depending on status
+    Hotel_id INT , -- can be null its constraints and need and optimization is explained later will explain in pdf
+    Date_of_payment DATETIME NOT NULL ,
+    Foreign Key (User_id) references Users(userid),
+    FOREIGN KEY (Ticket_id) references Tickets(Ticket_No),
+    FOREIGN KEY (Hotel_id) references  Hotels(Hotel_id)
+);
+
+create table HolidayPackage(
+    Package_id INT PRIMARY KEY ,
+    Hotel_id INT Not Null,
+    Start_date Date Not NULL ,
+    End_Date Date Not NULL
+);
+
+create TABLE Holiday_pay(
+    Package_id int NOT NULL ,
+    Payment_id int NOT NULL ,
+    PRIMARY KEY (Package_id,Payment_id),
+    FOREIGN KEY (Package_id) references HolidayPackage(Package_id),
+    FOREIGN KEY (Payment_id) references Payments(Payment_Id)
+);
