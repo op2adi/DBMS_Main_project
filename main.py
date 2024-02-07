@@ -13,3 +13,5 @@ execute("show databases")
 
 data = cursor.fetchone()
 print(data)
+
+# python3 main.py
