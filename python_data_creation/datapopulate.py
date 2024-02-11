@@ -425,7 +425,7 @@ def payments():
         payment_id = i + 1
         user_id = random.choice(user_ids)
         ticket_id = random.choice(ticket_ids)
-        hotel_id = random.choice(hotel_ids) if random.random() < 0.5 else None  # 50% chance of being None
+        hotel_id = random.choice(hotel_ids)
         if tmp%3==0:
             hotel_id=None
             tmp+=1
@@ -452,32 +452,72 @@ def holiay_package():
     hotel_ids = fech_hotel_id()
     # ticket_no = fetch_ticket_ids()
     flight_add = fetch_flight_number()
+    pa = []
     for i in range(10):
         package_id = random.randint(1000,10000)
         hotel_id = random.choice(hotel_ids)
         flight = random.choice(flight_add)
         # ticket = random.choice(ticket_no)
+        price = random.randint(100,1000)
         start_date = random_date(datetime(2023, 1, 1), datetime(2024, 12, 31))
         end_date = random_date(start_date, datetime(2025, 12, 31))
-
+        op = [package_id, hotel_id, start_date,flight, end_date, price]
+        pa.append(op)
         # Inserting record into the database
-        cursor.execute("INSERT INTO HolidayPackage (Package_id, Hotel_id, Start_date, flight_No,End_Date) VALUES (%s, %s, %s, %s,%s)",
-                    (package_id, hotel_id, start_date,flight, end_date))
+        cursor.execute("INSERT INTO HolidayPackage (Package_id, Hotel_id, Start_date, flight_No,End_Date,Price) VALUES (%s, %s, %s, %s,%s,%s)",
+                    (package_id, hotel_id, start_date,flight, end_date, price))
+        adi_con.commit()
+    print("INSERT INTO HolidayPackage (Package_id, Hotel_id, Start_date, flight_No,End_Date,Price) VALUES ")
+    for i in pa[:-1:]:
+        for j in range(len(i)):
+            if type(i[j])==datetime:
+                i[j]= str(i[j].strftime("%Y-%m-%d %H:%M:%S"))
+        print(tuple(i),end=",")
+        print()
+    for i in range(len(pa[-1])):
+        if type(pa[-1][i])==datetime:
+            pa[-1][i]= str(pa[-1][i].strftime("%Y-%m-%d %H:%M:%S"))
+    print(tuple(pa[-1]),end=";")
 
+def fetch_packagge_id():
+    cursor.execute("SELECT package_id from holidaypackage")
+    return [row[0] for row in cursor.fetchall()]
+def fetch_payment_id(spl_needed = False):
+    if spl_needed == True:
+        cursor.execute("SELECT payment_id from payments where Ticket_id is not NULL and hotel_id is not NULL and payment_status is not NULL")
+        return [row[0] for row in cursor.fetchall()]
+    cursor.execute("SELECT payment_id from payments")
+    return [row[0] for row in cursor.fetchall()]
+def holiday_pay():
+    k = fetch_packagge_id()
+    q = fetch_payment_id(True)
+    query = "INSERT INTO Holiday_Pay (Payment_Id,Package_id) VALUES (%s,%s)"
+    pop =[]
+    # print(k)
+    for i in range(min(len(k),len(q))):
+        l = (q[i], k[i])
+        # print(l)
+        cursor.execute(query,l)
+        pop.append(l)
+    print("INSERT INTO Holiday_Pay (Payment_Id,Package_id) VALUES ")
+    for i in pop[:-1]:
+        print(i,end = ",")
+        print()
+    print(pop[-1],end=";")
     adi_con.commit()
-
 if __name__ == '__main__':
-    # clear_all_tables()
-    # adding_for_users()
-    # add_complaints()
-    # Lounge_data()
-    # transport_data()
-    # transid = fetch_transport_data()
-    # train_Add()
-    # Flight_Add()
-    # bookerd_Loungue()
-    # Tickets_add()
-    # hotel_Add()
-    # hotlel_invoice()
-    # payments()
+    clear_all_tables()
+    adding_for_users()
+    add_complaints()
+    Lounge_data()
+    transport_data()
+    transid = fetch_transport_data()
+    train_Add()
+    Flight_Add()
+    bookerd_Loungue()
+    Tickets_add()
+    hotel_Add()
+    hotlel_invoice()
+    payments()
     holiay_package()
+    holiday_pay()

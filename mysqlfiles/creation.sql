@@ -124,6 +124,7 @@ create table HolidayPackage(
     Flight_No INT NOT NULL ,
     Start_date Date Not NULL ,
     End_Date Date Not NULL,
+    Price INT NOT NULL ,
     FOREIGN KEY (Flight_No) references Flight(Flight_No) on delete cascade on update cascade,
     FOREIGN KEY (Hotel_id) references Hotels(Hotel_id) on delete cascade on update cascade
 );
