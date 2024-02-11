@@ -3,6 +3,7 @@
 import os
 import random
 import string
+from datetime import datetime, timedelta
 
 import mysql.connector
 from faker import Faker
@@ -362,16 +363,121 @@ def Tickets_add():
         cursor.execute(query,l)
         print(f"INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount,Date_of_journey,Quantity) VALUES {l[0], l[1], l[2], l[3], l[4], l[5]}"+";")
         
-        
-        
+def hotel_Add():
+    fake = Faker()
+    hotel_id = []
+    a = 0
+    query = "INSERT INTO Hotels (Hotel_id, Location, Pricing) VALUES (%s, %s, %s)"
+    for i in range(10):
+        while True:
+            a = random.randint(1000,9999)
+            if a in hotel_id:
+                continue
+            hotel_id.append(a)
+            break
+        loc =  fake.city()
+        pr = random.randint(1000,10000)
+        t = (a,loc,pr)
+        try:
+            cursor.execute(query,t)
+            adi_con.commit()
+        except:
+            print("HUHUU")
+        print(f"INSERT INTO Hotels (Hotel_id, Location, Pricing) VALUES {a, loc, pr}"+";")
+def fech_hotel_id():
+    cursor.execute("Select Hotel_Id from Hotels")
+    return [row[0] for row in cursor.fetchall()]
+def hotlel_invoice():
+    fake = Faker()
+    hotel_id = fech_hotel_id()
+    u_id = fetch_user_ids()
+    query = "INSERT INTO Hotel_Invoice (Date_of_entering, Hotel_id, Userid) VALUES (%s, %s, %s)"
+    tup = []
+    for i in range(len(hotel_id)):
+        k = u_id[i]
+        e = fake.date()
+        sm = (e,hotel_id[i],u_id[i])
+        cursor.execute(query,(e,hotel_id[i],u_id[i]))
+        adi_con.commit()
+        tup.append(sm)
+    print("INSERT INTO Hotel_Invoice (Date_of_entering, Hotel_id, Userid) VALUES")
+    for i in tup[:len(tup)-1:]:
+        print(i,end = ",")
+        print()
+    print(tup[-1],end = ";")
+def random_date(start, end):
+    return start + timedelta(seconds=random.randint(0, int((end - start).total_seconds())))
+
+# Function to generate random Payment_Status
+def random_payment_status():
+    return random.choice(['0', '1'])
+def fetch_ticket_ids():
+    cursor.execute("Select ticket_No from tickets")
+    return [row[0] for row in cursor.fetchall()]
+def payments():
+    user_ids= fetch_user_ids()
+    ticket_ids= fetch_ticket_ids()
+    hotel_ids= fech_hotel_id()
+    query = "INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES (%s, %s, %s, %s, %s, %s)"
+    tmp = 0
+    lol = []
+    for i in range(10):
+        payment_id = i + 1
+        user_id = random.choice(user_ids)
+        ticket_id = random.choice(ticket_ids)
+        hotel_id = random.choice(hotel_ids) if random.random() < 0.5 else None  # 50% chance of being None
+        if tmp%3==0:
+            hotel_id=None
+            tmp+=1
+        elif tmp%3==1:
+            ticket_id = None
+            tmp+=1
+        else:
+            tmp+=1
+        payment_status = random_payment_status()
+        date_of_payment = random_date(datetime(2022, 1, 1), datetime.now())
+        payt = (payment_id, user_id, ticket_id, payment_status, hotel_id, date_of_payment.strftime('%Y-%m-%d %H:%M:%S'))
+        cursor.execute(query,payt)
+        adi_con.commit()
+        lol.append(payt)
+        # print(f"INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) "
+        #     f"VALUES ({payment_id}, {user_id}, {ticket_id}, '{payment_status}', {hotel_id}, '{date_of_payment.strftime('%Y-%m-%d %H:%M:%S')}');")
+    print("INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES ")
+    for i in lol[:-1]:
+        print(i,end=",")
+        print()
+    print(lol[-1],end=";")
+
+def holiay_package():
+    hotel_ids = fech_hotel_id()
+    # ticket_no = fetch_ticket_ids()
+    flight_add = fetch_flight_number()
+    for i in range(10):
+        package_id = random.randint(1000,10000)
+        hotel_id = random.choice(hotel_ids)
+        flight = random.choice(flight_add)
+        # ticket = random.choice(ticket_no)
+        start_date = random_date(datetime(2023, 1, 1), datetime(2024, 12, 31))
+        end_date = random_date(start_date, datetime(2025, 12, 31))
+
+        # Inserting record into the database
+        cursor.execute("INSERT INTO HolidayPackage (Package_id, Hotel_id, Start_date, flight_No,End_Date) VALUES (%s, %s, %s, %s,%s)",
+                    (package_id, hotel_id, start_date,flight, end_date))
+
+    adi_con.commit()
+
 if __name__ == '__main__':
     # clear_all_tables()
     # adding_for_users()
     # add_complaints()
     # Lounge_data()
     # transport_data()
-    transid = fetch_transport_data()
+    # transid = fetch_transport_data()
     # train_Add()
     # Flight_Add()
-    bookerd_Loungue()
-    Tickets_add()
+    # bookerd_Loungue()
+    # Tickets_add()
+    # hotel_Add()
+    # hotlel_invoice()
+    # payments()
+    holiay_package()
