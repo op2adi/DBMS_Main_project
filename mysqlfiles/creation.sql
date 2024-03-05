@@ -86,8 +86,10 @@ create TABLE Tickets(
     Amount INT NOT NULL ,
     Date_of_journey DATETIME NOT NULL ,
     Quantity INT Not NULL ,
+    userid INT NOT NULL ,
     Foreign Key (Train_No) references Trains(Train_No) on delete cascade on update cascade ,
     FOREIGN KEY (Flight_No) REFERENCES Flight(Flight_No) on delete cascade on update cascade ,
+    FOREIGN KEY (userid) REFERENCES Users(userid) on delete cascade on update cascade,
     CHECK ( Quantity > 0 )
 );
 

@@ -156,7 +156,7 @@ def enter_complaint_data(data):
         for record in data:
             cursor.execute("INSERT INTO Complaint (complaint_id, user_id, complaint_description) VALUES (%s, %s, %s)",
             record)
-            print(f"INSERT INTO Complaint (complaint_id, user_id, complaint_description) VALUES ({record[0]}, {record[1]}, {record[2]})"+";")
+            print(f"INSERT INTO Complaint (complaint_id, user_id, complaint_description) VALUES ({record[0]}, {record[1]}, {str(record[2])})"+";")
             adi_con.commit()
             # print("Record inserted successfully!")
     except mysql.connector.Error as err:
@@ -334,6 +334,7 @@ def fetch_train_no():
     return transport_ids
 
 def Tickets_add():
+    ghjkl = fetch_user_ids()
     fg = 0
     fake = Faker()
     q = fetch_train_no()
@@ -356,13 +357,16 @@ def Tickets_add():
             cursor.execute(f"Select Price from transport , flight where flight.flight_No={l[2]} && flight.Transport_id=Transport.Transport_id")
             fg = 1
             # print(cursor.fetchall())
+        # print(ghjkl)
+        dfg = random.choice(ghjkl)
+        
         amt = int(cursor.fetchone()[0])*qwe
-        l+=(amt,fake.date(),qwe)
-        query = "INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount,Date_of_journey,Quantity) VALUES (%s, %s, %s, %s,%s,%s)"
+        l+=(amt,random_date(datetime(2023, 1, 1), datetime(2024, 12, 31)),qwe,dfg)
+        query = "INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount,Date_of_journey,Quantity,userid) VALUES (%s, %s, %s, %s,%s,%s,%s)"
         # print(f"INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount,Date_of_journey,Quantity) VALUES {l[0], l[1], l[2], l[3], l[4], l[5]}")
         
         cursor.execute(query,l)
-        print(f"INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount,Date_of_journey,Quantity) VALUES {l[0], l[1], l[2], l[3], l[4], l[5]}"+";")
+        print(f"INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount,Date_of_journey,Quantity,userid) VALUES {l[0], l[1], l[2], l[3], l[4], l[5],l[6]}"+";")
         
 def hotel_Add():
     fake = Faker()

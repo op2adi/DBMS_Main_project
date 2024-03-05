@@ -106,18 +106,18 @@ VALUES
     ('2024-11-10 19:30:57', 'DtHAT7gr', 3635, 9220),
     ('2024-11-10 19:30:57', 'oMF6W1pJ', 4145, 7876),
     ('2024-11-10 19:30:57', 'DtHAT7gr', 8345, 3039);
-INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount, Date_of_journey, Quantity)
+INSERT INTO Tickets (Ticket_No, Train_No, Flight_No, Amount, Date_of_journey, Quantity,userid)
 VALUES
-    (17541, NULL, 3039, 748, '2011-04-28', 1),
-    (41319, 8916, NULL, 219, '2005-01-07', 1),
-    (36816, NULL, 9684, 1482, '2004-10-16', 2),
-    (48365, 8916, NULL, 1095, '2020-01-13', 5),
-    (23461, NULL, 9220, 1956, '2009-04-24', 4),
-    (15140, 1828, NULL, 126, '1996-01-07', 2),
-    (40312, NULL, 7876, 978, '2017-02-18', 2),
-    (74169, 8436, NULL, 983, '1982-10-21', 1),
-    (27476, NULL, 2266, 4915, '1982-06-28', 5),
-    (81615, 1580, NULL, 404, '2013-01-20', 2);
+    (17541, NULL, 3039, 748, '2011-04-28', 1,2377),
+    (41319, 8916, NULL, 219, '2005-01-07', 1,2377),
+    (36816, NULL, 9684, 1482, '2004-10-16', 2,5545),
+    (48365, 8916, NULL, 1095, '2020-01-13', 5,6572),
+    (23461, NULL, 9220, 1956, '2009-04-24', 4,2377),
+    (15140, 1828, NULL, 126, '1996-01-07', 2,8345),
+    (40312, NULL, 7876, 978, '2017-02-18', 2,4145),
+    (74169, 8436, NULL, 983, '1982-10-21', 1,3635),
+    (27476, NULL, 2266, 4915, '1982-06-28', 5,8345),
+    (81615, 1580, NULL, 404, '2013-01-20', 2,6572);
 INSERT INTO Hotels (Hotel_id, Location, Pricing) VALUES (4002, 'Ryanport', 8460);
 INSERT INTO Hotels (Hotel_id, Location, Pricing) VALUES (7072, 'Salasside', 2921);
 INSERT INTO Hotels (Hotel_id, Location, Pricing) VALUES (5871, 'Whiteville', 8835);
@@ -139,7 +139,7 @@ INSERT INTO Hotel_Invoice (Date_of_entering, Hotel_id, Userid) VALUES
 ('2005-02-10', 7467, 3635),
 ('1999-07-02', 7777, 6572),
 ('2017-07-25', 9032, 9080);
-INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES 
+INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES
 (1, 9080, 48365, '1', NULL, '2022-03-20 03:27:41'),
 (2, 3066, NULL, '0', 7777, '2024-01-24 05:46:17'),
 (3, 4145, 41319, '0', 7295, '2023-04-02 15:16:50'),
