@@ -51,6 +51,7 @@ def clear_all_tables():
                 print(f"DELETE FROM {table_name};")
                 adi_con.commit()
                 # print(f"All records cleared from table {table_name} successfully!")
+        # exit(0)
 
     except mysql.connector.Error as err:
         print("Error:", err)
@@ -234,7 +235,7 @@ def generate_transport_data():
     destn_loc = fake.city()
     while start_loc == destn_loc:
         destn_loc = fake.city()
-    timings = fake.date_time_between(start_date='-1y', end_date='+1y')
+    timings = random_date(datetime(2024, 1, 1), datetime.now())
     price = random.randint(10, 1000)
     return (k,start_loc, destn_loc, timings, price,100)  # Set destination to original start location
 
@@ -406,7 +407,11 @@ def hotlel_invoice():
         print()
     print(tup[-1],end = ";")
 def random_date(start, end):
-    return start + timedelta(seconds=random.randint(0, int((end - start).total_seconds())))
+    current_datetime = datetime.now()
+    start_date = current_datetime + timedelta(days=1)  # Ensure start date is in the future
+    end_date = start_date + timedelta(days=random.randint(1, 365))  # Adjust range as needed
+    return start_date + timedelta(seconds=random.randint(0, int((end_date - start_date).total_seconds())))
+
 
 # Function to generate random Payment_Status
 def random_payment_status():
@@ -435,7 +440,7 @@ def payments():
         else:
             tmp+=1
         payment_status = random_payment_status()
-        date_of_payment = random_date(datetime(2022, 1, 1), datetime.now())
+        date_of_payment = random_date(datetime(2024, 1, 1), datetime.now())
         payt = (payment_id, user_id, ticket_id, payment_status, hotel_id, date_of_payment.strftime('%Y-%m-%d %H:%M:%S'))
         cursor.execute(query,payt)
         adi_con.commit()
