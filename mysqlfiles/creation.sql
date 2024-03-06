@@ -138,3 +138,4 @@ create TABLE Holiday_pay(
     FOREIGN KEY (Package_id) references HolidayPackage(Package_id) on delete cascade on update cascade ,
     FOREIGN KEY (Payment_id) references Payments(Payment_Id) on delete cascade on update cascade
 );
+
