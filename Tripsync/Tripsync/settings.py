@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -69,12 +70,7 @@ TEMPLATES = [
 # settings.py
 
 # Define the URL prefix for static files.
-STATIC_URL = '/static/'
 
-# Additional directories from which Django will serve static files during development.
-STATICFILES_DIRS = [
-    BASE_DIR / 'makemytrip/static',  # Assuming your CSS file is located in a directory named 'static' within your project's base directory.
-]
 
 
 WSGI_APPLICATION = 'Tripsync.wsgi.application'
@@ -125,7 +121,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/makemytrip/static/'
+
+# Additional directories from which Django will serve static files during development.
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,"makemytrip/static"),  # Assuming your CSS file is located in a directory named 'static' within your project's base directory.
+]
+STATIC_ROOT = os.path.join(BASE_DIR,"assets")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

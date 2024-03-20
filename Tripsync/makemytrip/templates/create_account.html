@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'create_account.css' %}">
+    <title>Create Account</title>
+</head>
+<body>
+    <div class="create-account-container">
+        <h2>Create Account</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Phone Number</label>
+                <input type="number" id="phonenumber" name="phonenumber" required>
+            </div>
+            <div class="input-group1">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="House Number">House Number</label>
+                <input type="text" id="House Number" name="House Number" required>
+            </div>
+            <div class="input-group">
+                <label for="City">City</label>
+                <input type="text" id="City" pattern="[A-Za-z\s]+" name="City" required>
+            </div>
+            <div class="input-group">
+                <label for="Date of birth">Date of birth</label>
+                <input type="date" id="DOB" name="DOB" required>
+            </div>
+            <div class="input-group">
+                <label for="Pincode">Pincode</label>
+                <input type="number" id="pin" name="pin" pattern="[0-9]{6}" required>
+            </div>
+            <button type="submit" class="create-account-btn">Create Account</button>
+        </form>
+    </div>
+
+    <!-- Interactive elements -->
+    <div class="interactive-elements">
+        <div class="floating-shape floating-shape1"></div>
+        <div class="floating-shape floating-shape2"></div>
+        <div class="floating-shape floating-shape3"></div>
+        <div class="floating-shape floating-shape4"></div>
+    </div>
+</body>
+</html>

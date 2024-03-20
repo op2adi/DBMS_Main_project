@@ -4,5 +4,6 @@ from makemytrip import views
 
 urlpatterns = [
     path('',views.login_view),
+    path('create_account/', views.create_account, name='create_account'),
     # path('login_view/', views.login_view, name='login_view'),
 ]

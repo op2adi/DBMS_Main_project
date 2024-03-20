@@ -102,3 +102,5 @@ def login_view(request):
             return render(request, 'login.html', {'error_message': 'Invalid username or password'})
     else:
         return render(request, 'login.html')
+def create_account(request):
+    return render(request, 'create_account.html')
