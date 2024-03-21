@@ -91,14 +91,21 @@ def create_user(username, password):
         return True  # User created successfully
 
 def login_view(request):
+    adi_conn1 = mysql_bckens()
+    adi_conn = adi_conn1.cursor()
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        query = "Insert Into log_entry (userid,is_success) Values (%s,%s)"
         user = authenticate1(request, username=username, password=password)
         if user:
             # login(request, user)
+            adi_conn.execute(query,(username,1))
+            adi_conn1.commit()
             return render(request,'home.html')  # Redirect to home page after successful login
         else:
+            adi_conn.execute(query,(username,0))
+            adi_conn1.commit()
             # Handle invalid login credentials
             return render(request, 'login.html', {'error_message': 'Invalid username or password'})
     else:
@@ -151,9 +158,15 @@ def create_account(request):
         query = "Insert into userids_passwords (userid,password,is_locked) Value (%s, %s, %s)"
         adi_conn.execute(query,(userid,password,"F"))
         print(query,(userid,password,"F"))
+        # adi_conn.execut("")
         adi_conn1.commit()
         
                     # return render(request, 'create_account.html')
         return render(request, 'home.html')
     # print("JIJO")
     return render(request, 'create_account.html')
+
+
+
+def Flights(request):
+    return render(request, 'Flights.html')
