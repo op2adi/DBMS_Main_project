@@ -1,25 +1,59 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+{% load static %}
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Home page</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <h1>
-            "hi"
-        </h1>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
-        <script src="" async defer></script>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tripsync - Home</title>
+    <meta name="description" content="">
+    {% comment %} <meta charset="UTF-8"> {% endcomment %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Tripsync</h1>
+            <nav>
+                <ul>
+                    <li><a href="Flights.html">Flights</a></li>
+                    <li><a href="Flights.html">Hotels</a></li>
+                    <li><a href="Flights.html">Holidays</a></li>
+                    <li><a href="Flights.html">Trains</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Discover Amazing Deals</h2>
+            <p>Find the best flights, hotels, and holiday packages</p>
+            <a href="#" class="btn">Book Now</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="feature">
+                <h3>Flight Deals</h3>
+                <p>Explore our latest flight offers and book your next trip</p>
+            </div>
+            <div class="feature">
+                <h3>Hotel Stays</h3>
+                <p>Discover top hotel deals for your next stay</p>
+            </div>
+            <div class="feature">
+                <h3>Holiday Packages</h3>
+                <p>Book exciting holiday packages at unbeatable prices</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 MakeMyTrip. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
 </html>
