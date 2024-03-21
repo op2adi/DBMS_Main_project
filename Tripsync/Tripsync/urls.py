@@ -19,11 +19,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from makemytrip.views import login_view  # Correct import statement
-from makemytrip.views import Flights, create_account
+from makemytrip.views import (Flights, Holidays, Hotels, Trains,
+                              create_account, search_trains)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('create_account/', create_account, name='create_account'),
     path('', login_view, name='login'),  # Corrected URL pattern
-    path('Flights.html',Flights, name='flights'),
+    path('Flights/',Flights, name='Flights'),
+    path('Trains/',Trains,name='Trains'),
+    path('Hotels/',Hotels, name='Hotels'),
+    path('Holidays/',Holidays, name='Holidays'),
+    path('trains_search',search_trains, name='search_trains'),
 ]

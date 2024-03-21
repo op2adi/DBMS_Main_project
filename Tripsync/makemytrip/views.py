@@ -170,3 +170,45 @@ def create_account(request):
 
 def Flights(request):
     return render(request, 'Flights.html')
+
+def Trains(request):
+    adi_conn1 = mysql_bckens()
+    adi_conn = adi_conn1.cursor()
+
+    adi_conn.execute("SELECT * FROM trains")  # Assuming 'trains' is the table name
+    trains = adi_conn.fetchall()  # Fetch all train data from the database
+
+    context = {'trains': trains}
+    return render(request, 'Trains.html', context)
+
+
+def Holidays(request):
+    return render(request, 'Trains.html')
+
+def Hotels(request):
+    return render(request, 'Trains.html')
+
+def search_trains(request):
+    if request.method == 'GET':
+        print("JIJI")
+        source = request.GET.get('source')
+        destination = request.GET.get('destination')
+        date = request.GET.get('date')
+        
+        # Fetch trains from the database based on the selected source, destination, and date
+        # Perform database query here and fetch the results
+        
+        # For demonstration, let's assume you have a list of trains
+        trains = [
+            {'train_no': '12345', 'train_name': 'Express', 'departure_time': '10:00', 'arrival_time': '15:00'},
+            {'train_no': '54321', 'train_name': 'Superfast', 'departure_time': '12:00', 'arrival_time': '17:00'}
+        ]
+        
+        context = {
+            'trains': trains
+        }
+        return render(request, 'Trains.html', context)
+    else:
+        # Handle other request methods (POST, etc.) if necessary
+        pass
+    print("HU")

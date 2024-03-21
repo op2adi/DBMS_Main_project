@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Search</title>
+    <link rel="stylesheet" href="{% static 'trains.css' %}">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <h1>Search Trains</h1>
+
+    <form action="{% url 'search_trains' %}" method="GET">
+        <label for="source">Source:</label>
+        <select name="source" id="source">
+            {% for station in stations %}
+                <option value="{{ station }}">{{ station }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="destination">Destination:</label>
+        <select name="destination" id="destination">
+            {% for station in stations %}
+                <option value="{{ station }}">{{ station }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date">
+        
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>

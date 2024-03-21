@@ -97,18 +97,31 @@ body {
     }
 }
 
-.input-group1{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-}
-.input-group1 label{
+.input-group1 label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
     color: #555;
 }
+
+.input-group1 select {
+    width: 75%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 9px;
+}
+
+.input-group1 select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
 
 .input-group  select {
     width: 100% ;
@@ -188,6 +201,105 @@ body {
     width: 40px;
     height: 40px;
     background-color:magenta;
+    top: 50%;
+    left: 20%;
+}
+
+.floating-shape3 {
+    width: 80px;
+    height: 80px;
+    background-color: #2196f3;
+    top: 70%;
+    left: 30%;
+}
+
+.floating-shape4 {
+    width: 50px;
+    height: 50px;
+    background-color: #4caf50;
+    top: 40%;
+    left: 40%;
+}
+
+
+
+@keyframes moveShapesToCar {
+    0% {
+        border-radius: 50%;
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        border-radius: 50%;
+        transform: translateY(-50px) rotate(180deg);
+    }
+    100% {
+        border-radius: 0;
+        transform: translateY(0) rotate(360deg);
+    }
+}
+
+/* Additional styles for the car shape */
+.car {
+    width: 120px;
+    height: 60px;
+    background-color: #333;
+    top: 30%;
+    left: 10%;
+    position: relative;
+}
+
+.car::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #333;
+    bottom: 0;
+    border-radius: 0 0 60px 60px;
+}
+
+.car::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #333;
+    top: 65%;
+    left: 10%;
+    border-radius: 50%;
+}
+
+.car::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #333;
+    top: 65%;
+    right: 10%;
+    border-radius: 50%;
+}
+
+/* Modify existing styles for the interactive elements */
+.floating-shape {
+    position: absolute;
+    pointer-events: auto;
+    animation: moveShapesToCar 5s ease infinite alternate; /* Change animation */
+}
+
+/* Modify existing classes for specific shapes */
+.floating-shape1 {
+    width: 60px;
+    height: 60px;
+    background-color: #f44336;
+    top: 30%;
+    left: 10%;
+}
+
+.floating-shape2 {
+    width: 40px;
+    height: 40px;
+    background-color: magenta;
     top: 50%;
     left: 20%;
 }
