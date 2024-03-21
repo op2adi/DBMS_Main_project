@@ -12,6 +12,22 @@ INSERT INTO Gender_Ref (gender)
         ('F'), ('M')  ;
 
 
+CREATE TABLE `userids_passwords` (
+  `userid` int NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `is_locked` char(1) NOT NULL,
+  `attempt_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tries` int NOT NULL DEFAULT '0',
+  PRIMARY KEY (`userid`)
+);
+
+create Table log_entry(
+    userid int NOT NULL,
+    attempt_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    is_success Int NOT NULL,
+    Foreign key (userid) references userids_passwords(userid)
+);
+
 CREATE TABLE Users (
     userid INT  PRIMARY KEY,
     email VARCHAR(80) NOT NULL UNIQUE CHECK (email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'),
@@ -24,7 +40,8 @@ CREATE TABLE Users (
     dob DATE NOT NULL,
     age INT, -- we will calculate later when need it is an attribute and nhi bhi marzi hai mtlb lena chahoto le lo wrna mtlo
     FOREIGN KEY (gender)
-        REFERENCES Gender_Ref(gender)
+        REFERENCES Gender_Ref(gender) On delete cascade on update cascade ,
+    Foreign key (userid) references userids_passwords(userid) On delete cascade on update cascade
 );
 
 CREATE TABLE Complaint (

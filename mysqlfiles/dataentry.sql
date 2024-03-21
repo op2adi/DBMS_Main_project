@@ -12,7 +12,21 @@ DELETE FROM hotel_invoice;
 DELETE FROM payments;
 DELETE FROM holidaypackage;
 DELETE FROM holiday_pay;
+delete From userids_passwords;
 
+INSERT Into userids_passwords(userid,password,is_locked) VALUES
+(8895,'Aditya@1998','F'),
+(1111,'Aditya@1998','F'),
+(2377,'Aditya@1998','F'),
+(3066,'Aditya@1998','F'),
+(4145,'Aditya@1998','F'),
+(5545,'Aditya@1998','F'),
+(2562,'Aditya@1998','F'),
+(3138,'Aditya@1998','F'),
+(3635,'Aditya@1998','F'),
+(6572,'Aditya@1998','F'),
+(9080,'Aditya@1998','F'),
+(8345,'Aditya@1998','F');
 
 INSERT INTO Users (userid, email, name, phnumber, gender, Address_hno, City, Pincode, dob) VALUES
 (8895, 'zgonzalez@example.com', 'Connie Williams', '5152121722', 'F', '0569', 'New Karenview', '489077', '2005-11-26'),

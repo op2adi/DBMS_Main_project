@@ -91,16 +91,31 @@ def enter_temp_data_for_users(data):
         # Check for existing userids
         cursor.execute("SELECT userid FROM users")
         existing_userids = set(row[0] for row in cursor.fetchall())
+        # cursor.execute("Select userid from userds_passwords")
+        
 
         # Enter data
         for record in data:
             # Generate unique userid
             userid = generate_unique_userid(existing_userids)
+            sql2 = "INSERT INTO userids_passwords (userid,password,is_locked) Values (%s,%s,%s)"
 
             # Insert data into the table
             sql = "INSERT INTO Users (userid, email, name, phnumber, gender, Address_hno, City, Pincode, dob) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            characters = string.ascii_letters + string.digits + string.punctuation
+            password = ''.join(random.choice(characters) for i in range(8))
+            # return password
+            # password = 
             val = (userid,) + record
+            va2 = (userid,)+(password,"F")
+            try:
+                print(sql2,va2)
+                cursor.execute(sql2,va2)
+            except :
+                print(Exception)
+                continue
             # print(val)
+            adi_con.commit()
             cursor.execute(sql, val)
             # print(sql,val+";")
             print(f"INSERT INTO Users (userid, email, name, phnumber, gender, Address_hno, City, Pincode, dob) VALUES"+f" ({userid}, {record[0]}, {record[1]}, {record[2]}, {record[3]}, {record[4]}, {record[5]}, {record[6]}, {record[7]} )"+";")
