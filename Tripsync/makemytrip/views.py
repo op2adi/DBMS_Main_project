@@ -1,3 +1,4 @@
+import random
 import time
 
 import mysql.connector
@@ -103,4 +104,56 @@ def login_view(request):
     else:
         return render(request, 'login.html')
 def create_account(request):
+    if request.method == 'POST':
+        # print("111111111111111111111111")
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        phone_number = request.POST.get('phonenumber')
+        Gender = request.POST.get('gender')
+        House_Number = request.POST.get('House_Number')
+        City = request.POST.get('City')
+        Dob = request.POST.get('DOB')
+        pincode = request.POST.get('pin')
+        name = request.POST.get('name')
+        print(email, password, phone_number,Gender,House_Number,City,Dob,pincode)
+        adi_conn1 = mysql_bckens()
+        adi_conn = adi_conn1.cursor()
+        query = "Select phnumber from users"
+        adi_conn.execute(query)
+        d = adi_conn.fetchall()
+        print(d)
+        for i in d:
+            for j in i:
+                print(str(j),str(phone_number),str(j)==str(phone_number))
+                if str(j) == str(phone_number):
+                    alert_message = "Phone number already registered!"
+                    return render(request, 'create_account.html', {'alert_message': alert_message})
+        adi_conn.execute("select userid from users")
+        d = adi_conn.fetchall()
+        # d = [str(x) for x in i]
+        userids = []
+        for i in d:
+            for j in i:
+                userids.append(str(j))
+        userid = random.randint(10,9999)
+        while userid in d:
+            userid = random.randint(10,9999)
+        print(userid)
+        # adi_conn.execute("select userid from users")
+        # d = adi_conn.fetchall()
+        if Gender == "male":
+            Gender = "M"
+        else:
+            Gender = "F"
+        query = "INSERT INTO users (userid, email, name, phnumber, gender, Address_hno, City, Pincode, dob) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        print(query,(userid,email, name,phone_number,Gender,House_Number,City,pincode,Dob))
+        adi_conn.execute(query,(userid,email, name,phone_number,Gender,House_Number,City,pincode,Dob))
+        query = "Insert into userids_passwords (userid,password,is_locked) Value (%s, %s, %s)"
+        adi_conn.execute(query,(userid,password,"F"))
+        print(query,(userid,password,"F"))
+        adi_conn1.commit()
+        
+                    # return render(request, 'create_account.html')
+        return render(request, 'home.html')
+    # print("JIJO")
     return render(request, 'create_account.html')
