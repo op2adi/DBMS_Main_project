@@ -22,10 +22,10 @@ CREATE TABLE `userids_passwords` (
 );
 
 create Table log_entry(
-    userid int NOT NULL,
+    userid VARCHAR(100) NOT NULL,
     attempt_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    is_success Int NOT NULL,
-    Foreign key (userid) references userids_passwords(userid)
+    is_success Int NOT NULL
+#     Foreign key (userid) references userids_passwords(userid)
 );
 
 CREATE TABLE Users (
@@ -104,6 +104,7 @@ create TABLE Tickets(
     Date_of_journey DATETIME NOT NULL ,
     Quantity INT Not NULL ,
     userid INT NOT NULL ,
+    is_valid INT NOT Null DEFAULT 1,
     Foreign Key (Train_No) references Trains(Train_No) on delete cascade on update cascade ,
     FOREIGN KEY (Flight_No) REFERENCES Flight(Flight_No) on delete cascade on update cascade ,
     FOREIGN KEY (userid) REFERENCES Users(userid) on delete cascade on update cascade,

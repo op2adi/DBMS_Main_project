@@ -175,9 +175,9 @@ def Trains(request):
     adi_conn1 = mysql_bckens()
     adi_conn = adi_conn1.cursor()
 
-    adi_conn.execute("SELECT * FROM trains")  # Assuming 'trains' is the table name
+    adi_conn.execute("SELECT * FROM trains,transport where transport.Transport_id = Trains.Transport_id")  # Assuming 'trains' is the table name
     trains = adi_conn.fetchall()  # Fetch all train data from the database
-
+    print(trains)
     context = {'trains': trains}
     return render(request, 'Trains.html', context)
 

@@ -4,31 +4,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Train Search</title>
-    <link rel="stylesheet" href="{% static 'trains.css' %}">  <!-- Link to your CSS file -->
+    <link rel="stylesheet" type="text/css" href="{% static 'trains.css' %}">
+    <title>Train Information</title>
 </head>
 <body>
-    <h1>Search Trains</h1>
+    <h1>Train Information</h1>
 
-    <form action="{% url 'search_trains' %}" method="GET">
-        <label for="source">Source:</label>
-        <select name="source" id="source">
-            {% for station in stations %}
-                <option value="{{ station }}">{{ station }}</option>
+    <label for="start_loc">Select Start Location:</label>
+    <select id="start_loc">
+        <option value="">-- Select Start Location --</option>
+        {% for train in trains %}
+            <option value="{{ train.4 }}">{{ train.4}}</option>
+        {% endfor %}
+    </select>
+
+    <label for="dest_loc">Select Destination:</label>
+    <select id="dest_loc">
+        <option value="">-- Select Destination --</option>
+        {% for train in trains %}
+            <option value="{{train.5}}">{{ train.5 }}</option>
+        {% endfor %}
+    </select>
+
+    <table id="train_table">
+        <thead>
+            <tr>
+                <th>Train No</th>
+                <th>Start Location</th>
+                <th>Destination</th>
+                <th>Timings</th>
+                <th>Price</th>
+                <th>Vacancy</th>
+                <th>Book</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for train in trains %}
+            <tr class="train_row" data-start="{{ train.4 }}" data-dest="{{ train.5 }}">
+                <td>{{ train.0 }}</td>
+                <td>{{ train.4 }}</td>
+                <td>{{ train.5 }}</td>
+                <td>{{ train.6 }}</td>
+                <td>{{ train.7 }}</td>
+                <td>{{ train.8 }}</td>
+                <td><a href="/makemytrip/home.html" class="book_link">Book</a></td>
+            </tr>
             {% endfor %}
-        </select>
-        
-        <label for="destination">Destination:</label>
-        <select name="destination" id="destination">
-            {% for station in stations %}
-                <option value="{{ station }}">{{ station }}</option>
-            {% endfor %}
-        </select>
-        
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date">
-        
-        <button type="submit">Search</button>
-    </form>
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const startLocSelect = document.getElementById("start_loc");
+            const destLocSelect = document.getElementById("dest_loc");
+            const trainRows = document.querySelectorAll(".train_row");
+
+            function filterTrains() {
+                const startLoc = startLocSelect.value;
+                const destLoc = destLocSelect.value;
+
+                trainRows.forEach(function (row) {
+                    const rowStartLoc = row.getAttribute("data-start");
+                    const rowDestLoc = row.getAttribute("data-dest");
+
+                    if ((startLoc === "" || rowStartLoc === startLoc) && (destLoc === "" || rowDestLoc === destLoc)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+
+            startLocSelect.addEventListener("change", filterTrains);
+            destLocSelect.addEventListener("change", filterTrains);
+        });
+    </script>
 </body>
 </html>
