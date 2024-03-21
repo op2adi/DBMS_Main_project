@@ -62,11 +62,11 @@ def authenticate1(request, username, password):
         tries += 1
 
         # Check if the number of tries exceeds 2
-        if tries >= 3:
-            # Set tries to 0 and is_locked to 'T', and record the attempt time
-            adi_conn.execute("UPDATE userids_passwords SET tries = 0, is_locked = 'T', attempt_time = %s WHERE userid = %s", (time.strftime('%Y-%m-%d %H:%M:%S'), username))
-            adi_conn1.commit()
-        else:
+        # if tries >= 3:
+        #     # Set tries to 0 and is_locked to 'T', and record the attempt time
+        #     adi_conn.execute("UPDATE userids_passwords SET tries = 0, is_locked = 'T', attempt_time = %s WHERE userid = %s", (time.strftime('%Y-%m-%d %H:%M:%S'), username))
+        #     adi_conn1.commit()
+        if 1==1:
             # Update the number of tries for the user
             adi_conn.execute("UPDATE userids_passwords SET tries = %s WHERE userid = %s", (tries, username))
             adi_conn1.commit()
