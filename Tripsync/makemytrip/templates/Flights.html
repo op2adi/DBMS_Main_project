@@ -1,11 +1,84 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'flights.css' %}">
+    <title>Flight Information</title>
 </head>
 <body>
-    <h1>jdf</h1>
+    <div class="container">
+        <h1>Flight Information</h1>
+
+        <label for="start_loc">Select Start Location:</label>
+        <select id="start_loc">
+            <option value="">-- Select Start Location --</option>
+            {% for flight in flights %}
+                <option value="{{ flight.4 }}">{{ flight.4}}</option>
+            {% endfor %}
+        </select>
+        <label for="dest_loc">Select Destination:</label>
+        <select id="dest_loc">
+            <option value="">-- Select Destination --</option>
+            {% for flight in flights %}
+                <option value="{{flight.5}}">{{ flight.5 }}</option>
+            {% endfor %}
+        </select>
+
+        <table id="flight_table">
+            <thead>
+                <tr>
+                    <th>flight No</th>
+                    <th>Start Location</th>
+                    <th>Destination</th>
+                    <th>Timings</th>
+                    <th>Price</th>
+                    <th>Vacancy</th>
+                    <th>Book</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight in flights %}
+                    <tr class="flight_row" data-start="{{ flight.4 }}" data-dest="{{ flight.5 }}">
+                        <td>{{ flight.0 }}</td>
+                        <td>{{ flight.4 }}</td>
+                        <td>{{ flight.5 }}</td>
+                        <td>{{ flight.6 }}</td>
+                        <td>{{ flight.7 }}</td>
+                        <td>{{ flight.8 }}</td>
+                        <td><a href="{% url 'Book_full' %}" class="book_link">Book</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const startLocSelect = document.getElementById("start_loc");
+            const destLocSelect = document.getElementById("dest_loc");
+            const flightRows = document.querySelectorAll(".flight_row");
+
+            function filterflights() {
+                const startLoc = startLocSelect.value;
+                const destLoc = destLocSelect.value;
+
+                flightRows.forEach(function (row) {
+                    const rowStartLoc = row.getAttribute("data-start");
+                    const rowDestLoc = row.getAttribute("data-dest");
+
+                    if ((startLoc === "" || rowStartLoc === startLoc) && (destLoc === "" || rowDestLoc === destLoc)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+
+            startLocSelect.addEventListener("change", filterflights);
+            destLocSelect.addEventListener("change", filterflights);
+        });
+    </script>
 </body>
 </html>

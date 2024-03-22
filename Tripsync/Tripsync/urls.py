@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.urls import path
 from makemytrip.views import login_view  # Correct import statement
 from makemytrip.views import (Flights, Holidays, Hotels, Trains,
-                              create_account, search_trains)
+                              create_account, search_trains,Book_full)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,4 +31,5 @@ urlpatterns = [
     path('Hotels/',Hotels, name='Hotels'),
     path('Holidays/',Holidays, name='Holidays'),
     path('trains_search',search_trains, name='search_trains'),
+    path('Book/',Book_full, name='Book_full'),
 ]

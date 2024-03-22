@@ -169,7 +169,14 @@ def create_account(request):
 
 
 def Flights(request):
-    return render(request, 'Flights.html')
+    adi_conn1 = mysql_bckens()
+    adi_conn = adi_conn1.cursor()
+
+    adi_conn.execute("SELECT * FROM Flight,transport where transport.Transport_id = Flight.Transport_id")  # Assuming 'trains' is the table name
+    flights = adi_conn.fetchall()  # Fetch all train data from the database
+    print(flights)
+    context = {'flights': flights}
+    return render(request, 'Flights.html', context)
 
 def Trains(request):
     adi_conn1 = mysql_bckens()
@@ -177,7 +184,7 @@ def Trains(request):
 
     adi_conn.execute("SELECT * FROM trains,transport where transport.Transport_id = Trains.Transport_id")  # Assuming 'trains' is the table name
     trains = adi_conn.fetchall()  # Fetch all train data from the database
-    print(trains)
+    # print(trains)
     context = {'trains': trains}
     return render(request, 'Trains.html', context)
 
@@ -212,3 +219,6 @@ def search_trains(request):
         # Handle other request methods (POST, etc.) if necessary
         pass
     print("HU")
+    
+def Book_full(request):
+    return render(request, 'Book.html')

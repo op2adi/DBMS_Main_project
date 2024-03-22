@@ -8,50 +8,52 @@
     <title>Train Information</title>
 </head>
 <body>
-    <h1>Train Information</h1>
+    <div class="container">
+        <h1>Train Information</h1>
 
-    <label for="start_loc">Select Start Location:</label>
-    <select id="start_loc">
-        <option value="">-- Select Start Location --</option>
-        {% for train in trains %}
-            <option value="{{ train.4 }}">{{ train.4}}</option>
-        {% endfor %}
-    </select>
-
-    <label for="dest_loc">Select Destination:</label>
-    <select id="dest_loc">
-        <option value="">-- Select Destination --</option>
-        {% for train in trains %}
-            <option value="{{train.5}}">{{ train.5 }}</option>
-        {% endfor %}
-    </select>
-
-    <table id="train_table">
-        <thead>
-            <tr>
-                <th>Train No</th>
-                <th>Start Location</th>
-                <th>Destination</th>
-                <th>Timings</th>
-                <th>Price</th>
-                <th>Vacancy</th>
-                <th>Book</th>
-            </tr>
-        </thead>
-        <tbody>
+        <label for="start_loc">Select Start Location:</label>
+        <select id="start_loc">
+            <option value="">-- Select Start Location --</option>
             {% for train in trains %}
-            <tr class="train_row" data-start="{{ train.4 }}" data-dest="{{ train.5 }}">
-                <td>{{ train.0 }}</td>
-                <td>{{ train.4 }}</td>
-                <td>{{ train.5 }}</td>
-                <td>{{ train.6 }}</td>
-                <td>{{ train.7 }}</td>
-                <td>{{ train.8 }}</td>
-                <td><a href="/makemytrip/home.html" class="book_link">Book</a></td>
-            </tr>
+                <option value="{{ train.4 }}">{{ train.4}}</option>
             {% endfor %}
-        </tbody>
-    </table>
+        </select>
+
+        <label for="dest_loc">Select Destination:</label>
+        <select id="dest_loc">
+            <option value="">-- Select Destination --</option>
+            {% for train in trains %}
+                <option value="{{train.5}}">{{ train.5 }}</option>
+            {% endfor %}
+        </select>
+
+        <table id="train_table">
+            <thead>
+                <tr>
+                    <th>Train No</th>
+                    <th>Start Location</th>
+                    <th>Destination</th>
+                    <th>Timings</th>
+                    <th>Price</th>
+                    <th>Vacancy</th>
+                    <th>Book</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                    <tr class="train_row" data-start="{{ train.4 }}" data-dest="{{ train.5 }}">
+                        <td>{{ train.0 }}</td>
+                        <td>{{ train.4 }}</td>
+                        <td>{{ train.5 }}</td>
+                        <td>{{ train.6 }}</td>
+                        <td>{{ train.7 }}</td>
+                        <td>{{ train.8 }}</td>
+                        <td><a href="{% url 'Book_full' %}" class="book_link">Book</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
