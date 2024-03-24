@@ -46,7 +46,7 @@ BEGIN
 END//
 
 DROP TRIGGER IF EXISTS update_valid_tickets_trigger_payment;
-CREATE TRIGGER update_valid_tickets_trigger AFTER INSERT ON Tickets
+CREATE TRIGGER update_valid_tickets_trigger_payment AFTER INSERT ON Tickets
 FOR EACH ROW
 BEGIN
     DECLARE ticket_exists INT;
