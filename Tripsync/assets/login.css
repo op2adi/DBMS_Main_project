@@ -1,3 +1,4 @@
+
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to right, #ff7e5f, #feb47b);
@@ -6,7 +7,10 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    /* background-color: blue; */
+    /* background-image: url('https://tenor.com/view/hello-hi-travel-bye-wave-gif-331613070586075635');
+    background-size: cover; /* Adjust as needed */
+    /* background-repeat: no-repeat; Optional: Prevents repeating */
+
 }
 
 .login-container {
@@ -92,4 +96,8 @@ body {
     to {
         transform: scale(1);
     }
+}
+
+a {
+    text-decoration: none;
 }

@@ -1,0 +1,321 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    margin: 0;
+    /* overflow: hidden; Prevent scrolling */
+}
+
+.create-account-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 30%;
+    text-align: center;
+    position :absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fadeIn 0.5s ease forwards; /* Fade in animation */
+    z-index: 2; /* Ensure form is on top of other elements */
+}
+
+.create-account-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333; /* Darker text color */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    animation: slideIn 0.5s ease forwards; /* Slide in animation */
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555; /* Slightly darker label color */
+}
+
+.input-group input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease; /* Smooth border transition */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #007bff; /* Focus border color */
+}
+
+.create-account-btn {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(to right, #4CAF50, #2E8B57);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: slideIn 0.5s ease forwards; /* Slide in animation */
+}
+
+.create-account-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Keyframe animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.input-group1 label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-group1 select {
+    width: 75%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    margin-bottom: 9px;
+}
+
+.input-group1 select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
+.input-group  select {
+    width: 100% ;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+.input-group select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+#create-account-container #input-group label select#gender {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+#create-account-container #input-group select#gender:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
+
+/* Additional animations for interactive elements */
+@keyframes moveShapes {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-50px) rotate(180deg);
+    }
+    100% {
+        transform: translateY(0) rotate(360deg);
+    }
+}
+
+/* Styles for interactive elements */
+.interactive-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow interaction with elements below */
+}
+
+.floating-shape {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: auto; /* Allow interaction with shapes */
+    animation: moveShapes 5s ease infinite alternate; /* Move shapes animation */
+}
+
+.floating-shape1 {
+    width: 60px;
+    height: 60px;
+    background-color: #f44336;
+    top: 30%;
+    left: 10%;
+}
+
+.floating-shape2 {
+    width: 40px;
+    height: 40px;
+    background-color:magenta;
+    top: 50%;
+    left: 20%;
+}
+
+.floating-shape3 {
+    width: 80px;
+    height: 80px;
+    background-color: #2196f3;
+    top: 70%;
+    left: 30%;
+}
+
+.floating-shape4 {
+    width: 50px;
+    height: 50px;
+    background-color: #4caf50;
+    top: 40%;
+    left: 40%;
+}
+
+
+
+@keyframes moveShapesToCar {
+    0% {
+        border-radius: 50%;
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        border-radius: 50%;
+        transform: translateY(-50px) rotate(180deg);
+    }
+    100% {
+        border-radius: 0;
+        transform: translateY(0) rotate(360deg);
+    }
+}
+
+/* Additional styles for the car shape */
+.car {
+    width: 120px;
+    height: 60px;
+    background-color: #333;
+    top: 30%;
+    left: 10%;
+    position: relative;
+}
+
+.car::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #333;
+    bottom: 0;
+    border-radius: 0 0 60px 60px;
+}
+
+.car::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #333;
+    top: 65%;
+    left: 10%;
+    border-radius: 50%;
+}
+
+.car::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #333;
+    top: 65%;
+    right: 10%;
+    border-radius: 50%;
+}
+
+/* Modify existing styles for the interactive elements */
+.floating-shape {
+    position: absolute;
+    pointer-events: auto;
+    animation: moveShapesToCar 5s ease infinite alternate; /* Change animation */
+}
+
+/* Modify existing classes for specific shapes */
+.floating-shape1 {
+    width: 60px;
+    height: 60px;
+    background-color: #f44336;
+    top: 30%;
+    left: 10%;
+}
+
+.floating-shape2 {
+    width: 40px;
+    height: 40px;
+    background-color: magenta;
+    top: 50%;
+    left: 20%;
+}
+
+.floating-shape3 {
+    width: 80px;
+    height: 80px;
+    background-color: #2196f3;
+    top: 70%;
+    left: 30%;
+}
+
+.floating-shape4 {
+    width: 50px;
+    height: 50px;
+    background-color: #4caf50;
+    top: 40%;
+    left: 40%;
+}
