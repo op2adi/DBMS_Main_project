@@ -48,7 +48,8 @@
                         <td>{{ train.6 }}</td>
                         <td>{{ train.7 }}</td>
                         <td>{{ train.8 }}</td>
-                        <td><a href="{% url 'Book_full' %}" class="book_link">Book</a></td>
+                        <td><a href="{% url 'Book_full' %}?train_id={{ train.0 }}&start_loc={{ train.4 }}&dest_loc={{ train.5 }}" class="book_link">Book</a></td>
+
                     </tr>
                 {% endfor %}
             </tbody>

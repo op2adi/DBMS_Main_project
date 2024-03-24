@@ -18,9 +18,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from makemytrip import views
 from makemytrip.views import login_view  # Correct import statement
-from makemytrip.views import (Flights, Holidays, Hotels, Trains,
-                              create_account, search_trains,Book_full)
+from makemytrip.views import (Book_full, Flights, Holidays, Hotels, Trains,
+                              create_account, search_trains)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,4 +33,5 @@ urlpatterns = [
     path('Holidays/',Holidays, name='Holidays'),
     path('trains_search',search_trains, name='search_trains'),
     path('Book/',Book_full, name='Book_full'),
+    path('submit_book/',views.submit_booking, name='submit_booking'),
 ]
