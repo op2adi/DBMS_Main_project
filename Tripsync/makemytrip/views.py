@@ -143,6 +143,7 @@ def login_view(request):
         else:
             adi_conn.execute(query,(username,0))
             adi_conn1.commit()
+            # adi_conn
             # Handle invalid login credentials
             return render(request, 'login.html', {'error_message': 'Invalid username or password'})
     else:
@@ -348,11 +349,17 @@ def Payment(request):
             # print("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
             # p = adi_conn.fetchall()
             if not(p):
-                adi_conn.execute("Select price,timings from transport, flight where transport.transport_id = flight.transport_id and flight.flight_no = (%s) ",(int(flight_id),))
+                adi_conn.execute("Select price,timings,vacany from transport, flight where transport.transport_id = flight.transport_id and flight.flight_no = (%s) ",(int(flight_id),))
                 p = adi_conn.fetchall()
             print(p)
             # exit(0)
             q = p[0][1]
+            vac = p[0][2]
+            if vac<0:
+                return render("error.html")
+            elif vac==0:
+                return redirect("/home/?seats_full=True")
+            
             p = p[0][0]
             print(p,int(p),type(p))
             # q = 
@@ -375,6 +382,16 @@ def Payment(request):
             print(hoho1)
             ans2 = (hoho1, usrer_info.user_id(),adi_spl,1,None,datetime.now())
             adi_conn.execute(query2,ans2)
+            if train_id:
+                adi_conn.execute("Select transport_id from trains where train_no = (%s)",(train_id,))
+                lop = adi_conn.fetchall()
+                lop = lop[0][0]
+                adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-1,lop))
+            else:
+                adi_conn.execute("Select transport_id from flight where flight_no = (%s)",(flight_id,))
+                lop = adi_conn.fetchall()
+                lop = lop[0][0]
+                adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-1,lop))
             adi_conn1.commit()
             # adi_conn.execute
             # adi_conn.execute()

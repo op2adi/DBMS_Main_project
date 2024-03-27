@@ -15,6 +15,18 @@
             window.history.forward(); 
         } 
     </script>  {% endcomment %}
+    <script>
+        // Check if seats_full parameter is present in URL
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const seatsFull = urlParams.get('seats_full');
+            if (seatsFull === 'True') {
+                // Display alert indicating seats are full
+                alert('Seats are full!');
+                window.location.href = "http://127.0.0.1:8000/home/"
+            }
+        }
+    </script>
 </head>
 <body>
     <header>
