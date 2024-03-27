@@ -95,6 +95,7 @@ def authenticate1(request, username, password):
         #     # Set tries to 0 and is_locked to 'T', and record the attempt time
         #     adi_conn.execute("UPDATE userids_passwords SET tries = 0, is_locked = 'T', attempt_time = %s WHERE userid = %s", (time.strftime('%Y-%m-%d %H:%M:%S'), username))
         #     adi_conn1.commit()
+        #     return False
         if 1==1:
             # Update the number of tries for the user
             adi_conn.execute("UPDATE userids_passwords SET tries = %s WHERE userid = %s", (tries, username))
@@ -128,11 +129,13 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         query = "Insert Into log_entry (userid,is_success) Values (%s,%s)"
+        # adi_conn1.commit()
         user = authenticate1(request, username=username, password=password)
         if user:
             # login(request, user)
             adi_conn.execute(query,(username,1))
-            adi_conn1.commit()
+            # time.sleep(3)
+            # adi_conn1.commit()
             usrer_info.userid_set(username)
             return render(request,'home.html')  # Redirect to home page after successful login
         else:
@@ -286,3 +289,32 @@ def Book_full(request):
 
 def userids_show(request,user_id):
     return render(request, 'userid_show.html', {"user_id":user_id})
+def Payment(request):
+    if request.method == 'POST':
+        train_id = request.POST.get('train_id')
+        start_loc = request.POST.get('start_loc')
+        dest_loc = request.POST.get('dest_loc')
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        pincode = request.POST.get('pincode')
+        age = request.POST.get('age')
+        gender = request.POST.get('gender')
+        quantity = request.POST.get('quantity') 
+        # print(train_id) # debug
+        user_details = {
+            'train_id': train_id,
+            'start_loc': start_loc,
+            'dest_loc': dest_loc,
+            'name': name,
+            'email': email,
+            'phone': phone,
+            'address': address,
+            'pincode': pincode,
+            'age': age,
+            'gender': gender,
+            'quantity': quantity
+        }
+        return render(request, 'payment.html',{"user": user_details})
+    

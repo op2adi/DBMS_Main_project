@@ -19,7 +19,7 @@
             <!-- Add more train details as needed -->
         </div>
 
-        <form method="post" action="{% url 'submit_booking' %}" class="booking-form">
+        <form method="post" action="{% url 'payments' %}" class="booking-form">
             {% csrf_token %}
             <!-- Hidden input to store train details -->
             <input type="hidden" name="train_id" value="{{ request.GET.train_id }}">
@@ -61,6 +61,10 @@
                     <option value="male" {% if user.gender == 'male' %} selected {% endif %}>Male</option>
                     <option value="female" {% if user.gender == 'female' %} selected {% endif %}>Female</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="Quantity">Quantity:</label>
+                <input type="text" id="Quantity" name="Quantity" value="{{ 1 }}" required>
             </div>
 
             <button type="submit" class="btn">Book</button>

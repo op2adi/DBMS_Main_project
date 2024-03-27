@@ -34,4 +34,5 @@ urlpatterns = [
     path('trains_search',search_trains, name='search_trains'),
     path('Book/',Book_full, name='Book_full'),
     path('submit_book/',views.submit_booking, name='submit_booking'),
+    path('payments/',views.Payment, name='payments'),
 ]
