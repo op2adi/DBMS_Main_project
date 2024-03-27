@@ -9,6 +9,12 @@
     {% comment %} <meta charset="UTF-8"> {% endcomment %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    {% comment %} <script type="text/javascript"> 
+        window.history.back(); 
+        function noBack() { 
+            window.history.forward(); 
+        } 
+    </script>  {% endcomment %}
 </head>
 <body>
     <header>
@@ -16,10 +22,10 @@
             <h1 class="cont-title">Tripsync</h1>
             <nav>
                 <ul>
-                    <li><a href="Flights">Flights</a></li>
-                    <li><a href="Hotels">Hotels</a></li>
-                    <li><a href="Holidays">Holidays</a></li>
-                    <li><a href="Trains">Trains</a></li>
+                    <li><a href="/Flights">Flights</a></li>
+                    <li><a href="/Hotels">Hotels</a></li>
+                    <li><a href="/Holidays">Holidays</a></li>
+                    <li><a href="/Trains">Trains</a></li>
                 </ul>
             </nav>
         </div>
@@ -52,7 +58,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2024 MakeMyTrip. All rights reserved.</p>
+            <p>&copy; 2024 Tripsync. All rights reserved.</p>
         </div>
     </footer>
 </body>

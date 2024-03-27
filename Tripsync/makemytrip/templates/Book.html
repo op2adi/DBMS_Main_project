@@ -12,17 +12,30 @@
         <h1>Book Ticket</h1>
 
         <div class="train-details">
-            <h2>Train Details</h2>
-            <p><strong>Train Number:</strong> {{ request.GET.train_id }}</p>
+            <h2>
+                {% if request.GET.train_id %}
+                    Train Details
+                {% elif request.GET.flight_id %}
+                    Flight Details
+                {% endif %}
+            </h2>
+            <p><strong>{% if request.GET.train_id %} Train Number: {% else %} Flight Number: {% endif %}</strong> 
+                {% if request.GET.train_id %}
+                    {{ request.GET.train_id }}
+                {% elif request.GET.flight_id %}
+                    {{ request.GET.flight_id }}
+                {% endif %}
+            </p>
             <p><strong>Start Location:</strong> {{ request.GET.start_loc }}</p>
             <p><strong>Destination:</strong> {{ request.GET.dest_loc }}</p>
-            <!-- Add more train details as needed -->
         </div>
 
         <form method="post" action="{% url 'payments' %}" class="booking-form">
             {% csrf_token %}
             <!-- Hidden input to store train details -->
             <input type="hidden" name="train_id" value="{{ request.GET.train_id }}">
+            <!-- #region -->
+            <input type="hidden" name="flight_id" value="{{ request.GET.flight_id }}">
             <input type="hidden" name="start_loc" value="{{ request.GET.start_loc }}">
             <input type="hidden" name="dest_loc" value="{{ request.GET.dest_loc }}">
 

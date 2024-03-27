@@ -137,7 +137,9 @@ def login_view(request):
             # time.sleep(3)
             # adi_conn1.commit()
             usrer_info.userid_set(username)
-            return render(request,'home.html')  # Redirect to home page after successful login
+            adi_conn.execute("Update userids_passwords set tries = (%s) where userid = (%s)",(0,int(username)))
+            adi_conn1.commit()
+            return redirect(home_spl)  # Redirect to home page after successful login
         else:
             adi_conn.execute(query,(username,0))
             adi_conn1.commit()
@@ -145,6 +147,8 @@ def login_view(request):
             return render(request, 'login.html', {'error_message': 'Invalid username or password'})
     else:
         return render(request, 'login.html')
+def home_spl(request):
+    return render(request, 'home.html')
 def create_account(request):
     global usrer_info
     usrer_info = user_cls(00000)
@@ -270,7 +274,7 @@ def Book_full(request):
         user = usrer_info
         print("userifo defined")
     except:
-        return login_view(request)
+        return redirect(('http://127.0.0.1:8000/'))
     user = user.all_details()
     d = {}
     print(user)
@@ -291,7 +295,14 @@ def userids_show(request,user_id):
     return render(request, 'userid_show.html', {"user_id":user_id})
 def Payment(request):
     if request.method == 'POST':
+        try:
+            ur = usrer_info
+        except:
+            return redirect("http://127.0.0.1:8000/")
+        adi_conn1 = mysql_bckens()
+        adi_conn = adi_conn1.cursor()
         train_id = request.POST.get('train_id')
+        flight_id = request.POST.get('flight_id')
         start_loc = request.POST.get('start_loc')
         dest_loc = request.POST.get('dest_loc')
         name = request.POST.get('name')
@@ -301,8 +312,8 @@ def Payment(request):
         pincode = request.POST.get('pincode')
         age = request.POST.get('age')
         gender = request.POST.get('gender')
-        quantity = request.POST.get('quantity') 
-        # print(train_id) # debug
+        quantity = request.POST.get('Quantity') 
+        print(flight_id) # debug
         user_details = {
             'train_id': train_id,
             'start_loc': start_loc,
@@ -316,5 +327,62 @@ def Payment(request):
             'gender': gender,
             'quantity': quantity
         }
+        try:
+            query = "INSERT INTO TICKETS (ticket_no, train_no, flight_no, amount, date_of_journey, quantity, userid, is_valid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            query2 = "INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES (%s,%s,%s,%s,%s,%s)"
+            adi_conn.execute("Select ticket_no from tickets")
+            s = [x[0] for x in adi_conn.fetchall()]
+            print(s)
+            adi_spl = s[0]
+            while adi_spl in s:
+                adi_spl = random.randint(99,12345)
+            print(adi_spl)
+            p =[]
+            print(train_id)
+            if train_id:
+                print("NO")
+            if train_id:
+            # p = []:
+                adi_conn.execute("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
+                p = adi_conn.fetchall()
+            # print("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
+            # p = adi_conn.fetchall()
+            if not(p):
+                adi_conn.execute("Select price,timings from transport, flight where transport.transport_id = flight.transport_id and flight.flight_no = (%s) ",(int(flight_id),))
+                p = adi_conn.fetchall()
+            print(p)
+            # exit(0)
+            q = p[0][1]
+            p = p[0][0]
+            print(p,int(p),type(p))
+            # q = 
+            if train_id:
+                flight_id = None
+                train_id = int(train_id)
+            else:
+                train_id = None
+                flight_id = int(flight_id)
+            ans = (adi_spl,train_id,flight_id,int(p)*int(quantity),q,int(quantity),int(usrer_info.user_id()),1)
+            print(ans)
+            # exit()
+            adi_conn.execute(query,ans)
+            adi_conn.execute("select payment_id from payments")
+            hoho = adi_conn.fetchall()
+            hoho = [x[0] for x in hoho]
+            hoho1 = hoho[0]
+            while hoho1 in hoho:
+                hoho1 = random.randint(1,1234556)
+            print(hoho1)
+            ans2 = (hoho1, usrer_info.user_id(),adi_spl,1,None,datetime.now())
+            adi_conn.execute(query2,ans2)
+            adi_conn1.commit()
+            # adi_conn.execute
+            # adi_conn.execute()
+        except Exception as e:
+            print(e)
+            return render(request,'error.html')
         return render(request, 'payment.html',{"user": user_details})
+
+
+# def payment_write(request):
     

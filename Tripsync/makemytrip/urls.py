@@ -13,5 +13,6 @@ urlpatterns = [
     path('trains_search',views.search_trains, name='search_trains'),
     path('Book/',views.Book_full, name='Book_full'),
     path('submit_book',views.submit_booking, name='submit_book'),
-    path('payment',views.Payment, name='payments'),
+    path('payments/',views.Payment, name='payments'),
+    path('home/',views.home_spl, name='home'),
 ]

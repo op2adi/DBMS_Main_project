@@ -47,7 +47,7 @@
                         <td>{{ flight.6 }}</td>
                         <td>{{ flight.7 }}</td>
                         <td>{{ flight.8 }}</td>
-                        <td><a href="{% url 'Book_full' %}" class="book_link">Book</a></td>
+                        <td><a href="{% url 'Book_full' %}?flight_id={{ flight.0 }}&start_loc={{ flight.4 }}&dest_loc={{ flight.5 }}" class="book_link">Book</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

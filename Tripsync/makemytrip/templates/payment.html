@@ -1,11 +1,29 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'payment.css' %}">
     <title>Document</title>
+    <script>
+        // After 10 seconds, display "Payment done" message and redirect to home.html
+        setTimeout(function() {
+            // Display "Payment done" message
+            document.querySelector('.payment-text').innerText = "Payment done. Tickets booked. Have a safe journey!";
+            // Redirect to home.html
+            setTimeout(function() {
+                window.location.href = 'http://127.0.0.1:8000/home';
+            }, 3000); // Redirect after 3 seconds
+        }, 3000); // Show "Payment done" message after 10 seconds
+    </script>
 </head>
 <body>
-    
+    <div class="center-container">
+        <div class="lds-roller">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+        <p class="payment-text">Payment processing...</p>
+    </div>
 </body>
 </html>

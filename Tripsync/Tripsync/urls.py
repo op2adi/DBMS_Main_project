@@ -35,4 +35,5 @@ urlpatterns = [
     path('Book/',Book_full, name='Book_full'),
     path('submit_book/',views.submit_booking, name='submit_booking'),
     path('payments/',views.Payment, name='payments'),
+    path('home/',views.home_spl, name='home'),
 ]
