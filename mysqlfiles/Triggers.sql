@@ -13,9 +13,9 @@ BEGIN
         SET NEW.is_locked = 'T';
         SET NEW.attempt_time = CURRENT_TIMESTAMP;
     END IF;
-END//
+END //
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- Dropping the unlock_account_event if it exists
 DROP EVENT IF EXISTS unlock_account_event;
@@ -29,7 +29,7 @@ DO
     SET is_locked = 'F', tries = 0
     WHERE is_locked = 'T';
 
-DELIMITER ;
+-- DELIMITER ;
 
 -- Dropping the update_valid_tickets_trigger if it exists
 DROP TRIGGER IF EXISTS update_valid_tickets_trigger;
@@ -42,31 +42,20 @@ FOR EACH ROW
 BEGIN
     IF NEW.date_of_journey < NOW() THEN
         SET NEW.is_valid = 0;
+#         insert into tickets (Ticket_No, Train_No, Flight_No, Amount, Date_of_journey, Quantity, userid) VALUES (NEW.Ticket_No,NEW.Train_No,NEW.Flight_No,NEW.Amount,NEW.Date_of_journey,NEW.Date_of_journey,NEW.userid);
     END IF;
+#         insert into tickets (Ticket_No, Train_No, Flight_No, Amount, Date_of_journey, Quantity, userid) VALUES (NEW.Ticket_No,NEW.Train_No,NEW.Flight_No,NEW.Amount,NEW.Date_of_journey,NEW.Date_of_journey,NEW.userid);
 END//
 
-DROP TRIGGER IF EXISTS update_valid_tickets_trigger_payment;
-CREATE TRIGGER update_valid_tickets_trigger_payment AFTER INSERT ON Tickets
-FOR EACH ROW
-BEGIN
-    DECLARE ticket_exists INT;
+-- DELIMITER ;
 
-    -- Check if the newly inserted ticket already exists in payments table
-    SELECT COUNT(*) INTO ticket_exists FROM payments WHERE ticket_no = NEW.ticket_no;
+DELIMITER //
 
-    -- If the ticket does not exist in payments table, insert it
-    IF ticket_exists = 0 THEN
-        INSERT INTO payments (Payment_Id, user_id, Ticket_id,Payment_Status,Hotel_id,date_of_payment)
-        VALUES ();
-    END IF;
-END//
-
-DELIMITER ;
 
 -- Dropping the validate_tickets_event if it exists
 DROP EVENT IF EXISTS validate_tickets_event;
 
--- Recreating the validate_tickets_event event only if it doesn't already exist
+# -- Recreating the validate_tickets_event event only if it doesn't already exist
 CREATE EVENT IF NOT EXISTS validate_tickets_event
 ON SCHEDULE EVERY 10 SECOND
 STARTS CURRENT_TIMESTAMP
@@ -75,7 +64,8 @@ DO
     SET is_valid = 0
     WHERE date_of_journey < NOW();
 
-DELIMITER //
+# DELIMITER //
+
 DROP TRIGGER IF EXISTS update_valid_tickets_trigger8;
 CREATE TRIGGER update_valid_tickets_trigger8 BEFORE INSERT ON Tickets
 FOR EACH ROW
@@ -87,4 +77,33 @@ BEGIN
     END IF;
 END;
 
-DELIMITER ;
+-- DELIMITER //
+
+DELIMITER //
+# DROP PROCEDURE if exists delete_old_log_entries;
+# CREATE PROCEDURE delete_old_log_entries()
+# BEGIN
+# #     select  sleep(3);
+#     DELETE FROM log_entry
+#     ORDER BY attempt_time ASC
+#     LIMIT 1;
+# END //
+#
+# DROP TRIGGER IF EXISTS log_entry_count_trigger;
+# CREATE TRIGGER log_entry_count_trigger
+# AFTER INSERT ON log_entry
+# #     select sleep(3);
+# FOR EACH ROW
+# BEGIN
+#     DECLARE entry_count INT;
+#
+#     -- Get the count of entries in the log_entry table
+#     SELECT COUNT(*) INTO entry_count FROM log_entry;
+#
+#     -- If the count exceeds 10, delete the oldest entry
+#     IF entry_count > 3 THEN
+#         CALL delete_old_log_entries();
+#     END IF;
+# END//
+#
+# DELIMITER ;
