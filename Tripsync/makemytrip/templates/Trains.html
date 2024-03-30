@@ -10,22 +10,25 @@
 <body>
     <div class="container">
         <h1>Train Information</h1>
-
-        <label for="start_loc">Select Start Location:</label>
+        <div class="bahar">
+            <label for="start_loc">Select Start Location:</label>
         <select id="start_loc">
             <option value="">-- Select Start Location --</option>
             {% for train in trains %}
                 <option value="{{ train.4 }}">{{ train.4}}</option>
             {% endfor %}
         </select>
+        </div>
 
-        <label for="dest_loc">Select Destination:</label>
+        <div class="as">
+            <label for="dest_loc">Select Destination:</label>
         <select id="dest_loc">
             <option value="">-- Select Destination --</option>
             {% for train in trains %}
                 <option value="{{train.5}}">{{ train.5 }}</option>
             {% endfor %}
         </select>
+        </div>
 
         <table id="train_table">
             <thead>

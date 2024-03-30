@@ -80,6 +80,18 @@ END;
 -- DELIMITER //
 
 DELIMITER //
+DROP TRIGGER IF EXISTS update_valid_tickets_trigger7;
+
+create trigger update_valid_tickets_trigger7 BEFORE update on tickets
+FOR EACH ROW
+BEGIN
+    IF NEW.date_of_journey > NOW() THEN
+        SET NEW.is_valid = 1;
+    ELSE
+        SET NEW.is_valid = 0;
+    END IF;
+END;
+
 # DROP PROCEDURE if exists delete_old_log_entries;
 # CREATE PROCEDURE delete_old_log_entries()
 # BEGIN

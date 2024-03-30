@@ -6,6 +6,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+    <style>
+        /* CSS for floating button */
+        .float-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .float-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
     <title>Login Page</title>
 </head>
 <body>
@@ -26,5 +51,18 @@
         </form>
         <p>Don't have an account? <a href="{% url 'create_account' %}">Create one</a>.</p>
     </div>
+
+    <!-- Floating button -->
+    <div class="interactive-elements">
+        <div class="floating-shape floating-shape1">
+            <a href="{% url 'home' %}" class = "guest-button">Guest</a>
+        </div>
+    </div>
+    {% if alert_message %}
+    <script>
+        alert("{{ alert_message }}");
+        window.location.href = "{% url 'login' %}"
+    </script>
+    {% endif %}
 </body>
 </html>

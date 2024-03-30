@@ -121,11 +121,11 @@ def create_user(username, password):
         return True  # User created successfully
 
 def login_view(request):
-    global usrer_info
-    usrer_info = user_cls(00000)
     adi_conn1 = mysql_bckens()
     adi_conn = adi_conn1.cursor()
     if request.method == 'POST':
+        global usrer_info
+        usrer_info = user_cls(00000)
         username = request.POST.get('username')
         password = request.POST.get('password')
         query = "Insert Into log_entry (userid,is_success) Values (%s,%s)"
@@ -275,7 +275,8 @@ def Book_full(request):
         user = usrer_info
         print("userifo defined")
     except:
-        return redirect(('http://127.0.0.1:8000/'))
+        alert_message = "Please Login first"
+        return render(request, 'login.html', {'alert_message': alert_message})
     user = user.all_details()
     d = {}
     print(user)
@@ -344,7 +345,7 @@ def Payment(request):
                 print("NO")
             if train_id:
             # p = []:
-                adi_conn.execute("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
+                adi_conn.execute("Select price,timings,vacany from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
                 p = adi_conn.fetchall()
             # print("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
             # p = adi_conn.fetchall()
@@ -357,7 +358,7 @@ def Payment(request):
             vac = p[0][2]
             if vac<0:
                 return render("error.html")
-            elif vac==0:
+            elif vac==0 or (vac-int(quantity))<=0:
                 return redirect("/home/?seats_full=True")
             
             p = p[0][0]
@@ -381,6 +382,7 @@ def Payment(request):
                 hoho1 = random.randint(1,1234556)
             print(hoho1)
             ans2 = (hoho1, usrer_info.user_id(),adi_spl,1,None,datetime.now())
+            print(ans2)
             adi_conn.execute(query2,ans2)
             if train_id:
                 adi_conn.execute("Select transport_id from trains where train_no = (%s)",(train_id,))
@@ -391,7 +393,7 @@ def Payment(request):
                 adi_conn.execute("Select transport_id from flight where flight_no = (%s)",(flight_id,))
                 lop = adi_conn.fetchall()
                 lop = lop[0][0]
-                adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-1,lop))
+                adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-int(quantity),lop))
             adi_conn1.commit()
             # adi_conn.execute
             # adi_conn.execute()
@@ -400,6 +402,28 @@ def Payment(request):
             return render(request,'error.html')
         return render(request, 'payment.html',{"user": user_details})
 
+def Tickets(request):
+    adi_conn1 = mysql_bckens()
+    adi_conn = adi_conn1.cursor()
+    try:
+        usr = usrer_info  # Assuming this is a valid variable containing user information
+    except:
+        return render(request, 'login.html', {"alert_message": "Please Login to see upcoming Journeys"})
+    ty = usr.user_id()
+    adi_conn.execute("SELECT * FROM tickets WHERE userid = (%s) AND is_valid = (%s)", (ty, 1))
+    r = adi_conn.fetchall()
+    for i in range(len(r)):
+        if r[i][1] == None:
+            adi_conn.execute("SELECT * FROM transport,flight WHERE transport.transport_id = flight.transport_id and flight_no = (%s)",(r[i][2],))
+            ui = adi_conn.fetchall()
+            r[i] = r[i]+(ui[0][1],ui[0][2])
+        else:
+            adi_conn.execute("SELECT * FROM transport,trains WHERE transport.transport_id = trains.transport_id and train_no = (%s)",(r[i][1],))
+            ui = adi_conn.fetchall()
+            r[i] = r[i]+(ui[0][1],ui[0][2])
+        
+    print(r)  # Check to ensure you're getting the expected data
+    upcoming_journeys = {'tickets': r}  # Assuming r is a list of dictionaries
+    return render(request, 'ticket.html', upcoming_journeys)
 
-# def payment_write(request):
     

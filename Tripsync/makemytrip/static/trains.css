@@ -74,3 +74,13 @@ select {
 .book_link:hover {
     background-color: #45a049;
 }
+
+.ticket-image {
+    display: none;
+    vertical-align: middle;
+    size : 10%;
+    width: 20px;
+    height: auto;
+    /* ti */
+    /* Add any additional styling here */
+}

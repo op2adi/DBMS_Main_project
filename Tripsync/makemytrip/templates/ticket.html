@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'trains.css' %}">
+    <title>Ticket Information</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Ticket Information</h1>
+        
+        <table id="ticket_table">
+            <thead>
+                <tr>
+                    <th>Ticket ID</th>
+                    <th>Type</th>
+                    <th>Train No / Flight No</th>
+                    <th>Start Location</th>
+                    <th>Destination</th>
+                    <th>Timings</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ticket_info in tickets %}
+                    <tr class="ticket_row">
+                        <td>{{ ticket_info.0 }}</td>
+                        {% if ticket_info.1 %}
+                            <!-- Train ticket -->
+                            <td><img src="{% static 'train.jpeg' %}" alt="Train" class="ticket-image"></td>
+                            <td>{{ ticket_info.1 }}</td>
+                            <td>{{ ticket_info.8 }}</td>
+                            <td>{{ ticket_info.9 }}</td>
+                            <td>{{ ticket_info.4 }}</td>
+                            <td>{{ ticket_info.3 }}</td>
+                            <td>{{ ticket_info.5 }}</td>
+                        {% elif ticket_info.2 %}
+                            <td><img src="{% static 'flight.jpeg' %}" alt="Flight" class="ticket-image"></td>
+                            <!-- Flight ticket -->
+                            <td>{{ ticket_info.2 }}</td>
+                            <td>{{ ticket_info.8 }}</td>  <!-- Assuming flight start location -->
+                            <td>{{ ticket_info.9 }}</td>  <!-- Assuming flight destination -->
+                            <td>{{ ticket_info.4 }}</td>  <!-- Assuming flight timings -->
+                            <td>{{ ticket_info.3 }}</td>  <!-- Assuming flight price -->
+                            <td>{{ ticket_info.5 }}</td>  <!-- Assuming flight quantity -->
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JavaScript or any other scripts if needed -->
+</body>
+</html>

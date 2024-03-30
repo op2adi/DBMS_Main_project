@@ -10,21 +10,24 @@
 <body>
     <div class="container">
         <h1>Flight Information</h1>
-
-        <label for="start_loc">Select Start Location:</label>
+        <div class="mp">
+            <label for="start_loc">Select Start Location:</label>
         <select id="start_loc">
             <option value="">-- Select Start Location --</option>
             {% for flight in flights %}
                 <option value="{{ flight.4 }}">{{ flight.4}}</option>
             {% endfor %}
         </select>
-        <label for="dest_loc">Select Destination:</label>
+        </div>
+        <div class="lopa">
+            <label for="dest_loc">Select Destination:</label>
         <select id="dest_loc">
             <option value="">-- Select Destination --</option>
             {% for flight in flights %}
                 <option value="{{flight.5}}">{{ flight.5 }}</option>
             {% endfor %}
         </select>
+        </div>
 
         <table id="flight_table">
             <thead>
