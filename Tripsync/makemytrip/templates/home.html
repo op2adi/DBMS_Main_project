@@ -6,15 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Tripsync - Home</title>
     <meta name="description" content="">
-    {% comment %} <meta charset="UTF-8"> {% endcomment %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
-    {% comment %} <script type="text/javascript"> 
-        window.history.back(); 
-        function noBack() { 
-            window.history.forward(); 
-        } 
-    </script>  {% endcomment %}
     <script>
         // Check if seats_full parameter is present in URL
         window.onload = function() {
@@ -24,6 +17,24 @@
                 // Display alert indicating seats are full
                 alert('Seats are full!');
                 window.location.href = "http://127.0.0.1:8000/home/"
+            }
+        }
+
+        // Show dropdown on hover
+        function showDropdown() {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+
+        // Close dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-photo')) {
+                const dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    const openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
             }
         }
     </script>
@@ -42,7 +53,14 @@
                 </ul>
             </nav>
         </div>
-        <div class="profile">
+        <div class="dropdown">
+            <a href="#" class="profile" onclick="showDropdown()">
+                <div class="profile-photo"></div>
+            </a>
+            <div id="dropdownMenu" class="dropdown-content">
+                <a href="#">Profile Details</a>
+                <a href="#">Log Out</a>
+            </div>
         </div>
     </header>
 
