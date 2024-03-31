@@ -16,12 +16,20 @@ Including another URLconf
 """
 # URL configuration for Tripsync project.
 
+import secrets
+import string
+
 from django.contrib import admin
 from django.urls import path
 from makemytrip import views
 from makemytrip.views import login_view  # Correct import statement
 from makemytrip.views import (Book_full, Flights, Holidays, Hotels, Trains,
                               create_account, search_trains)
+
+
+def generate_random_word(length):
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for i in range(length))
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,4 +45,5 @@ urlpatterns = [
     path('payments/',views.Payment, name='payments'),
     path('home/',views.home_spl, name='home'),
     path('Tickets/',views.Tickets, name='Tickets'),
+    path(generate_random_word(32)+'/',views.spl_comm, name='spl_comm'),
 ]

@@ -301,6 +301,8 @@ def Payment(request):
             ur = usrer_info
         except:
             return redirect("http://127.0.0.1:8000/")
+        global adi_conn1
+        global adi_conn 
         adi_conn1 = mysql_bckens()
         adi_conn = adi_conn1.cursor()
         train_id = request.POST.get('train_id')
@@ -313,6 +315,7 @@ def Payment(request):
         address = request.POST.get('address')
         pincode = request.POST.get('pincode')
         age = request.POST.get('age')
+        # price = request.POST.get('price')
         gender = request.POST.get('gender')
         quantity = request.POST.get('Quantity') 
         print(flight_id) # debug
@@ -328,6 +331,7 @@ def Payment(request):
             'age': age,
             'gender': gender,
             'quantity': quantity
+            # 'price': price
         }
         try:
             query = "INSERT INTO TICKETS (ticket_no, train_no, flight_no, amount, date_of_journey, quantity, userid, is_valid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -358,10 +362,12 @@ def Payment(request):
             vac = p[0][2]
             if vac<0:
                 return render("error.html")
-            elif vac==0 or (vac-int(quantity))<=0:
+            elif vac==0 or (vac-int(quantity))<0:
                 return redirect("/home/?seats_full=True")
             
             p = p[0][0]
+            # user_details['price'] = p
+            price = {"price": p*int(quantity)}
             print(p,int(p),type(p))
             # q = 
             if train_id:
@@ -388,20 +394,23 @@ def Payment(request):
                 adi_conn.execute("Select transport_id from trains where train_no = (%s)",(train_id,))
                 lop = adi_conn.fetchall()
                 lop = lop[0][0]
-                adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-1,lop))
+                adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-int(quantity),lop))
             else:
                 adi_conn.execute("Select transport_id from flight where flight_no = (%s)",(flight_id,))
                 lop = adi_conn.fetchall()
                 lop = lop[0][0]
                 adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-int(quantity),lop))
-            adi_conn1.commit()
+                print("hsods",int(quantity))
+            # adi_conn1.commit()
             # adi_conn.execute
             # adi_conn.execute()
         except Exception as e:
             print(e)
             return render(request,'error.html')
-        return render(request, 'payment.html',{"user": user_details})
-
+        return render(request, 'payment.html',{"price": price})
+def spl_comm(request):
+    adi_conn1.commit()
+    return render(request,'home.html')
 def Tickets(request):
     adi_conn1 = mysql_bckens()
     adi_conn = adi_conn1.cursor()

@@ -14,8 +14,9 @@
             // Redirect to home.html
             setTimeout(function() {
                 window.location.href = 'http://127.0.0.1:8000/home';
-            }, 3000); // Redirect after 3 seconds
-        }, 1000); // Show "Payment done" message after 1 seconds
+            }, 1000); // Redirect after 3 seconds
+            window.location.href = "{% url 'spl_comm' %}"
+        }, 3000); // Show "Payment done" message after 1 seconds
     </script>
 </head>
 <body>
@@ -23,7 +24,9 @@
         <div class="lds-roller">
             <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
         </div>
-        <p class="payment-text">Payment processing...</p>
+        <p class="payment-text">A transaction of Ruppees {{price.price}} has been initiated please do not press back button</p>
+
+
     </div>
 </body>
 </html>

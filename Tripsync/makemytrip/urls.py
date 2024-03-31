@@ -1,7 +1,14 @@
+import secrets
+import string
+
 from django.contrib import admin
 from django.urls import path
 from makemytrip import views
 
+
+def generate_random_word(length):
+    alphabet = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(alphabet) for i in range(length))
 urlpatterns = [
     path('',views.login_view),
     path('create_account/', views.create_account, name='create_account'),
@@ -16,4 +23,5 @@ urlpatterns = [
     path('payments/',views.Payment, name='payments'),
     path('home/',views.home_spl, name='home'),
     path('Tickets/',views.Tickets, name='Tickets'),
+    path(generate_random_word(32)+'/',views.spl_comm, name='spl_comm'),
 ]

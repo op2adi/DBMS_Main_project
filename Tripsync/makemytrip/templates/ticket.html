@@ -30,7 +30,7 @@
                         <td>{{ ticket_info.0 }}</td>
                         {% if ticket_info.1 %}
                             <!-- Train ticket -->
-                            <td><img src="{% static 'train.jpeg' %}" alt="Train" class="ticket-image"></td>
+                            <td>Train</td>
                             <td>{{ ticket_info.1 }}</td>
                             <td>{{ ticket_info.8 }}</td>
                             <td>{{ ticket_info.9 }}</td>
@@ -38,7 +38,7 @@
                             <td>{{ ticket_info.3 }}</td>
                             <td>{{ ticket_info.5 }}</td>
                         {% elif ticket_info.2 %}
-                            <td><img src="{% static 'flight.jpeg' %}" alt="Flight" class="ticket-image"></td>
+                            <td>Flight</td>
                             <!-- Flight ticket -->
                             <td>{{ ticket_info.2 }}</td>
                             <td>{{ ticket_info.8 }}</td>  <!-- Assuming flight start location -->

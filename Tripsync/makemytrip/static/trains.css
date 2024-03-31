@@ -75,12 +75,12 @@ select {
     background-color: #45a049;
 }
 
-.ticket-image {
-    display: none;
-    vertical-align: middle;
-    size : 10%;
+/* .ticket-image { */
+    /* display: none; */
+    /* vertical-align: middle;
+    size : 100%;
     width: 20px;
-    height: auto;
+    height: auto; */
     /* ti */
     /* Add any additional styling here */
-}
+/* } */
