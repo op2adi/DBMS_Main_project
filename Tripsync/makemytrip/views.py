@@ -24,7 +24,7 @@ def mysql_bckens():
     connection = mysql.connector.connect(
         host='localhost', # host mt hi chedo chl jayega
         user='root', # user dalo
-        password='Aditya@1998', # password dalo me bdl dung anhi batunga
+        password='45221313', # password dalo me bdl dung anhi batunga
         database='makemytrip' # optional hai comment bhi kr skte ho phir password me se , bhi remove krna 
     )
     if connection.is_connected():
