@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'trains.css' %}">
+    <title>Hotel Information</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Hotel Information</h1>
+        <div class="bahar">
+            <label for="start_loc">Location:</label>
+        <select id="start_loc">
+            <option value="">-- Location --</option>
+            {% for hotel in hotels %}
+                <option value="{{ hotel.1 }}">{{ hotel.1}}</option>
+            {% endfor %}
+        </select>
+        </div>
+
+        {% comment %} <div class="as">
+            <label for="dest_loc">Select Destination:</label>
+        <select id="dest_loc">
+            <option value="">-- Select Destination --</option>
+            {% for train in trains %}
+                <option value="{{train.5}}">{{ train.5 }}</option>
+            {% endfor %}
+        </select>
+        </div> {% endcomment %}
+
+        <table id="hotel_table">
+            <thead>
+                <tr>
+                    <th>Hotel ID</th>
+                    <th>Location</th>
+                    {% comment %} <th>Destination</th> {% endcomment %}
+                    <th>Timings</th>
+                    <th>Price</th>
+                    <th>Vacancy</th>
+                    <th>Book</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hotel in hotels %}
+                    <tr class="hotel_row" data-start="{{ hotel.1 }}">
+                        <td>{{ hotel.0 }}</td>
+                        <td>{{ hotel.1 }}</td>
+                        <td>{{ current_date_time }}</td>
+                        <td>{{ hotel.2 }}</td>
+                        <td>{{ hotel.3 }}</td>
+                        {% comment %} <td>{{ train.8 }}</td> {% endcomment %}
+                        <td><a href="{% url 'Book_full' %}?hotel_id={{ hotel.0 }}&loc={{ hotel.1 }}" class="book_link">Book</a></td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const startLocSelect = document.getElementById("start_loc");
+            const hotelRows = document.querySelectorAll(".hotel_row");
+    
+            function filterHotels() {
+                const startLoc = startLocSelect.value;
+    
+                hotelRows.forEach(function (row) {
+                    const rowStartLoc = row.getAttribute("data-start");
+                    if (startLoc === "" || rowStartLoc === startLoc) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+    
+            startLocSelect.addEventListener("change", filterHotels);
+        });
+    </script>
+    
+</body>
+</html>
