@@ -192,3 +192,6 @@ WHERE EXISTS (
     JOIN transport t ON h.Location = t.Destn_Loc
     WHERE h.Hotel_id = HolidayPackage.Hotel_id
 );
+update hotels set location = "South Sheila" where hotel_id = 1691;
+update hotels set location = "Reneeville" where hotel_id = 4002;
+update hotels set location = "Port Teresaborough" where hotel_id = 5490;
