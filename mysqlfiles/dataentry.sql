@@ -179,3 +179,16 @@ INSERT INTO Holiday_Pay (Payment_Id,Package_id) VALUES
 (6, 9164),
 (9, 5187),
 (3, 7343);
+UPDATE HolidayPackage
+SET Price = (
+    SELECT (SUM(h.Pricing) + SUM(t.Price)) * 0.9 AS TotalPriceWithDiscount
+    FROM hotels h
+    JOIN transport t ON h.Location = t.Destn_Loc
+    WHERE h.Hotel_id = HolidayPackage.Hotel_id
+)
+WHERE EXISTS (
+    SELECT 1
+    FROM hotels h
+    JOIN transport t ON h.Location = t.Destn_Loc
+    WHERE h.Hotel_id = HolidayPackage.Hotel_id
+);

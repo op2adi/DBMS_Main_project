@@ -152,6 +152,7 @@ create table HolidayPackage(
 create TABLE Holiday_pay(
     Package_id int NOT NULL ,
     Payment_id int NOT NULL ,
+    price int NOT NULL ,
     PRIMARY KEY (Package_id,Payment_id),
     FOREIGN KEY (Package_id) references HolidayPackage(Package_id) on delete cascade on update cascade ,
     FOREIGN KEY (Payment_id) references Payments(Payment_Id) on delete cascade on update cascade

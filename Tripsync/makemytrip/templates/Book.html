@@ -19,9 +19,17 @@
                     Flight Details
                 {% elif request.GET.hotel_id %}
                     Hotel Details
+                {% elif request.GET.package_id %}
+                    Holiday Package
                 {% endif %}
             </h2>
-            {% if request.GET.train_id %}
+            {% if request.GET.package_id %}
+                <p><strong>Package ID:</strong> {{ request.GET.package_id }}</p>
+                <p><strong>Start Location:</strong> {{ request.GET.start_loc }}</p>
+                <p><strong>End Location:</strong> {{ request.GET.dest_loc }}</p>
+                <p><strong>Flight Number:</strong> {{ request.GET.flight_id }}</p>
+                <p><strong>Hotel ID:</strong> {{ request.GET.hotel_id }}</p>
+            {% elif request.GET.train_id %}
                 <p><strong>Train Number:</strong> {{ request.GET.train_id }}</p>
                 <p><strong>Start Location:</strong> {{ request.GET.start_loc }}</p>
                 <p><strong>Destination:</strong> {{ request.GET.dest_loc }}</p>
@@ -32,13 +40,21 @@
             {% elif request.GET.hotel_id %}
                 <p><strong>Hotel ID:</strong> {{ request.GET.hotel_id }}</p>
                 <p><strong>Location:</strong> {{ request.GET.loc }}</p>
+            
             {% endif %}
         </div>
 
         <form method="post" action="{% url 'payments' %}" class="booking-form">
             {% csrf_token %}
+            {% if request.GET.package_id %}
+                <input type="hidden" name="flight_id" value="{{ request.GET.flight_id }}">
+                <input type="hidden" name="package_id" value="{{ request.GET.package_id }}">
+                <input type="hidden" name="hotel_id" value="{{ request.GET.hotel_id }}">
+                <input type="hidden" name="start_loc" value="{{ request.GET.start_loc }}">
+                <input type="hidden" name="dest_loc" value="{{ request.GET.dest_loc }}">
+                <input type="hidden" name="price" value="{{ request.GET.price }}">
             <!-- Hidden input to store booking details -->
-            {% if request.GET.train_id %}
+            {% elif request.GET.train_id %}
                 <input type="hidden" name="train_id" value="{{ request.GET.train_id }}">
                 <input type="hidden" name="start_loc" value="{{ request.GET.start_loc }}">
                 <input type="hidden" name="dest_loc" value="{{ request.GET.dest_loc }}">

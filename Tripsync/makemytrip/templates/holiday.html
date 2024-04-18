@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'holiday.css' %}">
+    <title>Holiday Packages</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Holiday Packages</h1>
+        <div class="bahar">
+            <label for="start_loc">Select Start Location:</label>
+        <select id="start_loc">
+            <option value="">-- Select Start Location --</option>
+            {% for train in trains %}
+                <option value="{{ train.4 }}">{{ train.4}}</option>
+            {% endfor %}
+        </select>
+        </div>
+
+        <div class="as">
+            <label for="dest_loc">Select Destination:</label>
+        <select id="dest_loc">
+            <option value="">-- Select Destination --</option>
+            {% for train in trains %}
+                <option value="{{train.5}}">{{ train.5 }}</option>
+            {% endfor %}
+        </select>
+        </div>
+
+        <table id="train_table">
+            <thead>
+                <tr>
+                    {% comment %} <th>Package_id</th> {% endcomment %}
+                    <th>Flight no</th>
+                    <th>Start Location</th>
+                    <th>Destination</th>
+                    <th>Hotel</th>
+                    <th>Timings</th>
+                    <th>Price</th>
+                    <th>Vacancy</th>
+                    <th>Book</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for train in trains %}
+                    <tr class="train_row" data-start="{{ train.4 }}" data-dest="{{ train.5 }}">
+                        {% comment %} <td>{{ train.0}}</td> {% endcomment %}
+                        <td>{{ train.2 }}</td>
+                        <td>{{ train.11 }}</td>
+                        <td>{{ train.12 }}</td>
+                        <td>{{ train.6 }}</td>
+                        <td>{{ train.5 }}</td>
+                        <td>{{ train.14 }}</td>
+                        <td>{{ train.19 }}</td>
+                        <td><a href="{% url 'Book_full' %}?package_id={{ train.0 }}&flight_id={{train.2}}&hotel_id={{ train.6 }}&start_loc={{ train.11 }}&dest_loc={{ train.12 }}&price ={{train.5}}" class="book_link">Book</a></td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const startLocSelect = document.getElementById("start_loc");
+            const destLocSelect = document.getElementById("dest_loc");
+            const trainRows = document.querySelectorAll(".train_row");
+
+            function filterTrains() {
+                const startLoc = startLocSelect.value;
+                const destLoc = destLocSelect.value;
+
+                trainRows.forEach(function (row) {
+                    const rowStartLoc = row.getAttribute("data-start");
+                    const rowDestLoc = row.getAttribute("data-dest");
+
+                    if ((startLoc === "" || rowStartLoc === startLoc) && (destLoc === "" || rowDestLoc === destLoc)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            }
+
+            startLocSelect.addEventListener("change", filterTrains);
+            destLocSelect.addEventListener("change", filterTrains);
+        });
+    </script>
+</body>
+</html>

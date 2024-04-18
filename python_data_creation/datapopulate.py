@@ -508,18 +508,24 @@ def fetch_packagge_id():
     return [row[0] for row in cursor.fetchall()]
 def fetch_payment_id(spl_needed = False):
     if spl_needed == True:
-        cursor.execute("SELECT payment_id from payments where Ticket_id is not NULL and hotel_id is not NULL and payment_status is not NULL")
-        return [row[0] for row in cursor.fetchall()]
+
+        cursor.execute("SELECT payment_id,ticket_id,hotel_id from payments where Ticket_id is not NULL and hotel_id is not NULL and payment_status is not NULL")
+        return [row for row in cursor.fetchall()]
     cursor.execute("SELECT payment_id from payments")
     return [row[0] for row in cursor.fetchall()]
 def holiday_pay():
     k = fetch_packagge_id()
     q = fetch_payment_id(True)
-    query = "INSERT INTO Holiday_Pay (Payment_Id,Package_id) VALUES (%s,%s)"
+    # pr = cursor.execute("")
+    query = "INSERT INTO Holiday_Pay (Payment_Id,Package_id,price) VALUES (%s,%s,%s)"
     pop =[]
     # print(k)
     for i in range(min(len(k),len(q))):
-        l = (q[i], k[i])
+        cursor.execute("Select flight_no from tickets where ticket_id = (%s)",(q[i][1]))
+        ry = cursor.fetchall()
+        pr = cursor.execute("Select price from holiday_package where ticket_id = (%s) and hotel_id = (%s)",(q[i][1],q[i][2]))
+        ty = pr.fetchall()
+        l = (q[i][0], k[i])
         # print(l)
         cursor.execute(query,l)
         pop.append(l)

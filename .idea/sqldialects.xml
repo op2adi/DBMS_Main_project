@@ -4,5 +4,6 @@
     <file url="file://$PROJECT_DIR$/mysqlfiles/Triggers.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/mysqlfiles/creation.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/mysqlfiles/queries.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/mysqlfiles/test.sql" dialect="MySQL" />
   </component>
 </project>

@@ -22,7 +22,7 @@ DROP EVENT IF EXISTS unlock_account_event;
 
 -- Recreating the unlock_account_event event only if it doesn't already exist
 CREATE EVENT IF NOT EXISTS unlock_account_event
-ON SCHEDULE EVERY 10 SECOND
+ON SCHEDULE EVERY 100 SECOND
 STARTS CURRENT_TIMESTAMP
 DO
     UPDATE userids_passwords

@@ -233,10 +233,28 @@ def Trains(request):
     # print(trains)
     context = {'trains': trains}
     return render(request, 'Trains.html', context)
-
-
 def Holidays(request):
-    return render(request, 'Trains.html')
+    adi_conn1 = mysql_bckens()
+    adi_conn = adi_conn1.cursor()
+    adi_conn.execute('''SELECT *
+FROM HolidayPackage,hotels,transport,flight
+where (holidaypackage.Flight_No = flight.Flight_No and flight.Transport_Id = transport.Transport_Id and holidaypackage.Hotel_id = hotels.Hotel_id and transport.Destn_Loc = hotels.Location)
+;''')  # Assuming 'trains' is the table name
+    trains = adi_conn.fetchall()
+    # print(trains[0])
+    answer = []
+    for i in range(len(trains)):
+        answer.append(list(trains[i]))
+    # for train in answer:
+    # answer.append(min(answer[9],answer[15]-3))
+        # print(train)
+    
+    print(answer)
+    for ans in answer:
+        ans.append(min(ans[9],ans[15]))
+    context = {'trains': answer}
+    return render(request, 'holiday.html',context)
+
 
 def Hotels(request):
     adi_conn1 = mysql_bckens()
@@ -312,6 +330,7 @@ def Payment(request):
         global adi_conn 
         adi_conn1 = mysql_bckens()
         adi_conn = adi_conn1.cursor()
+        package_id = request.POST.get('package_id')
         train_id = request.POST.get('train_id')
         flight_id = request.POST.get('flight_id')
         hotel_id = request.POST.get('hotel_id')
@@ -342,7 +361,7 @@ def Payment(request):
             'quantity': quantity
             # 'price': price
         }
-        if (train_id!=None or flight_id!=None):
+        if (package_id == None and (train_id!=None or flight_id!=None)):
             try:
                 query = "INSERT INTO TICKETS (ticket_no, train_no, flight_no, amount, date_of_journey, quantity, userid, is_valid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
                 query2 = "INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES (%s,%s,%s,%s,%s,%s)"
@@ -361,6 +380,7 @@ def Payment(request):
                 # p = []:
                     adi_conn.execute("Select price,timings,vacany from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
                     p = adi_conn.fetchall()
+                    
                 # print("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
                 # p = adi_conn.fetchall()
                 if not(p):
@@ -417,6 +437,73 @@ def Payment(request):
             except Exception as e:
                 print(e)
                 return render(request,'error.html')
+        elif package_id != None:
+            print("hi",hotel_id)
+            adi_conn.execute("Select price from holidaypackage where package_id = %s",(package_id,))
+            tyyy = adi_conn.fetchall()
+            owl = int(tyyy[0][0])
+            # adi_conn.execute()
+            query = "INSERT INTO TICKETS (ticket_no, train_no, flight_no, amount, date_of_journey, quantity, userid, is_valid) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            query2 = "INSERT INTO Payments (Payment_Id, User_id, Ticket_id, Payment_Status, Hotel_id, Date_of_payment) VALUES (%s,%s,%s,%s,%s,%s)"
+            price1 = request.POST.get('price')
+            print("scnsnsldsmsdms",price1)
+            adi_conn.execute("Select ticket_no from tickets")
+            s = [x[0] for x in adi_conn.fetchall()]
+            print(s)
+            adi_spl = s[0]
+            while adi_spl in s:
+                adi_spl = random.randint(99,12345)
+            print(adi_spl)
+            p =[]
+            print(train_id)
+            if train_id:
+                print("NO")
+            if train_id:
+            # p = []:
+                adi_conn.execute("Select price,timings,vacany from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
+                p = adi_conn.fetchall()
+            # print("Select price,timings from transport,trains where transport.transport_id = trains.transport_id and trains.train_no = (%s) ",(int(train_id),))
+            # p = adi_conn.fetchall()
+            if not(p):
+                adi_conn.execute("Select price,timings,vacany from transport, flight where transport.transport_id = flight.transport_id and flight.flight_no = (%s) ",(int(flight_id),))
+                p = adi_conn.fetchall()
+            print(p)
+            q = p[0][1]
+            vac = p[0][2]
+            if vac<0:
+                return render("error.html")
+            elif vac==0 or (vac-int(quantity))<0:
+                return redirect("/home/?seats_full=True")
+            adi_conn.execute("Select vacancy,pricing from Hotels where Hotel_id = %s",(hotel_id,))
+            rt = adi_conn.fetchall()
+            print(rt)
+            p = rt[0][1]
+            rt = rt[0][0]
+            if rt<0:
+                return render(request,'error.html')
+            elif rt==0 or rt-int(quantity)<0:
+                return redirect("/home/?seats_full=True")
+            adi_conn.execute("update hotels set vacancy = %s where hotel_id = %s",(rt-int(quantity),hotel_id))
+            adi_conn.execute("Insert Into hotel_invoice (Date_of_entering,Hotel_id,userid) values (%s, %s, %s)",(datetime.now(),hotel_id,int(usrer_info.user_id())))
+            adi_conn.execute("select payment_id from payments")
+            hoho = adi_conn.fetchall()
+            hoho = [x[0] for x in hoho]
+            hoho1 = hoho[0]
+            while hoho1 in hoho:
+                hoho1 = random.randint(1,1234556)
+            print(hoho1)
+            ans = (adi_spl,train_id,flight_id,int(owl)*int(quantity),q,int(quantity),int(usrer_info.user_id()),1)
+            print(ans)
+            # exit()
+            adi_conn.execute(query,ans)
+            ans2 = (hoho1, int(usrer_info.user_id()),adi_spl,1,hotel_id,datetime.now())
+            adi_conn.execute(query2,ans2)
+            adi_conn.execute("Select transport_id from flight where flight_no = (%s)",(flight_id,))
+            lop = adi_conn.fetchall()
+            lop = lop[0][0]
+            adi_conn.execute("update transport set vacany = (%s) where transport_id = (%s)",(vac-int(quantity),lop))
+            print("hsods",int(quantity))
+            price = {"price":int(quantity)*(int(owl))}
         else:
             print("hi",hotel_id)
             adi_conn.execute("Select vacancy,pricing from Hotels where Hotel_id = %s",(hotel_id,))
