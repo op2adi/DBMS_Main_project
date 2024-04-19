@@ -8,53 +8,39 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
-    <script>
-        // Show dropdown on hover
-        function showDropdown(event) {
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            if (event.target.matches('.profile')) {
-                dropdownMenu.classList.toggle("show");
-            } else {
-                dropdownMenu.classList.remove("show");
-            }
+    <style>
+        /* Add styles for the submit button */
+       /* CSS for Submit Button */
+        #dfg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999; /* Ensure it's above other content */
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
         }
 
-        // Close dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.profile') && !event.target.matches('.dropdown-content')) {
-                document.getElementById("dropdownMenu").classList.remove("show");
-            }
+        #dfg:hover {
+            background-color: #45a049;
         }
 
-        // Check if seats_full parameter is present in URL
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const seatsFull = urlParams.get('seats_full');
-            if (seatsFull === 'True') {
-                // Display alert indicating seats are full
-                alert('Seats are full!');
-                window.location.href = "http://127.0.0.1:8000/home/"
-            }
+        #dfg img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
         }
 
-        // Show dropdown on hover
-        function showDropdown() {
-            document.getElementById("dropdownMenu").classList.toggle("show");
-        }
-
-        // Close dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.profile-photo')) {
-                const dropdowns = document.getElementsByClassName("dropdown-content");
-                for (let i = 0; i < dropdowns.length; i++) {
-                    const openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
+    </style>
 </head>
 <body>
     <header class="navbar">
@@ -112,5 +98,10 @@
             <p>&copy; 2024 Tripsync. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Add the button for submitting a complaint -->
+    <button id="dfg" onclick="location.href='{% url 'complaint' %}'">
+        <img src="{% static 'penanspaper.jpeg' %}" alt="Pen and Paper Icon"> Submit Complaint
+    </button>
 </body>
 </html>

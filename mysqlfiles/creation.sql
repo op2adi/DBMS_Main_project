@@ -67,7 +67,8 @@ create table Transport(
     Destn_Loc VARCHAR(50) NOT NULL ,
     Timings TIMESTAMP NOT NULL,
     Price INT NOT NULL,
-    Vacany Int DEFAULT 100
+    Vacany Int DEFAULT 100,
+    check ( Vacany>=0 )
 
 );
 

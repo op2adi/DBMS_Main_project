@@ -48,4 +48,6 @@ urlpatterns = [
     path(generate_random_word(32)+'/',views.spl_comm, name='spl_comm'),
     path('logout/', views.logout, name='logout'),
     path('profile/', views.profile, name='profile'),
+    path('complaint/', views.complaint_view, name='complaint'),
+    path('comp_sub/', views.complaint_submission_view, name='complaint_submission'),
 ]

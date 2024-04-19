@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="{% static 'complaint.css' %}">
+    <title>Submit Complaint</title>
+    <script>
+        function validateForm() {
+            var complaintText = document.getElementById("complaint_text").value.trim(); // Trim to remove leading and trailing spaces
+            if (complaintText === "") {
+                alert("Complaint cannot be empty");
+                return false; // Prevent form submission
+            }
+            return true; // Proceed with form submission
+        }
+    </script>
+</head>
+<body>
+    <h1 class="idkbc">Submit feedback or complaint</h1>
+    <form action="{% url 'complaint_submission' %}" method="post">
+        {% csrf_token %}  <!-- Include the CSRF token here -->
+        <textarea id="complaint_text" name="complaint_text" rows="4" cols="50"></textarea><br>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

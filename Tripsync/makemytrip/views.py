@@ -586,3 +586,48 @@ def logout(request):
     global usrer_info
     del usrer_info 
     return redirect("http://127.0.0.1:8000/")
+
+def complaint_view(request):
+    try:
+        user = usrer_info
+        print("userifo defined")
+    except:
+        alert_message = "Please Login first"
+        return render(request, 'login.html', {'alert_message': alert_message})
+    return render(request, 'complaint.html')
+
+def complaint_submission_view(request):
+    try:
+        user = usrer_info
+        print("userifo defined")
+    except:
+        alert_message = "Please Login first"
+        return render(request, 'login.html', {'alert_message': alert_message})
+    # user = user.all_details()
+    user = user.all_details()
+    d = {}
+    print(user)
+    d["userid"] = user[0][0]
+    if request.method == 'POST':
+        # Process the submitted complaint
+        complaint_text = request.POST.get('complaint_text', '')
+        adi_conn1 = mysql_bckens()
+        adi_conn = adi_conn1.cursor()
+        adi_conn.execute("Select complaint_id from complaint")
+        er = adi_conn.fetchall()
+        er = [row[0] for row in er]
+        print(er)
+        ty = random.randint(1,123456)
+        n = 123456
+        while ty in er:
+            ty = random.randint(1,n+1)
+            n+=1
+        adi_conn.execute("INSERT INTO complaint (complaint_id,user_id,  complaint_description,filed_at) VALUES (%s,%s,%s,%s)", (ty,d["userid"], complaint_text,datetime.now()))
+        adi_conn1.commit()
+        # Do something with the complaint text, like saving it to the database
+        # Redirect to a thank you page or any other appropriate page
+        
+        return redirect('http://127.0.0.1:8000/home')  # Replace 'thank_you' with your desired URL pattern
+    else:
+        # Handle GET request if necessary
+        return redirect('http://127.0.0.1:8000/home')  # Redirect back to the complaint page
