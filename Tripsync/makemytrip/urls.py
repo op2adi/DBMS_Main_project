@@ -24,4 +24,6 @@ urlpatterns = [
     path('home/',views.home_spl, name='home'),
     path('Tickets/',views.Tickets, name='Tickets'),
     path(generate_random_word(32)+'/',views.spl_comm, name='spl_comm'),
+    path('logout/', views.logout, name='logout'),
+    path('profile/', views.profile, name='profile'),
 ]

@@ -9,6 +9,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
     <script>
+        // Show dropdown on hover
+        function showDropdown(event) {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            if (event.target.matches('.profile')) {
+                dropdownMenu.classList.toggle("show");
+            } else {
+                dropdownMenu.classList.remove("show");
+            }
+        }
+
+        // Close dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile') && !event.target.matches('.dropdown-content')) {
+                document.getElementById("dropdownMenu").classList.remove("show");
+            }
+        }
+
         // Check if seats_full parameter is present in URL
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -53,15 +70,16 @@
                 </ul>
             </nav>
         </div>
-        <div class="dropdown">
-            <a href="#" class="profile" onclick="showDropdown()">
+        <div class="dropdown" onclick="showDropdown(event)">
+            <a href="#" class="profile">
                 <div class="profile-photo"></div>
             </a>
             <div id="dropdownMenu" class="dropdown-content">
-                <a href="#">Profile Details</a>
-                <a href="#">Log Out</a>
+                <a href="{% url 'profile' %}">Profile Details</a>
+                <a href="{% url 'logout' %}">Log Out</a>
             </div>
         </div>
+        
     </header>
 
     <section class="hero">

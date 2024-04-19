@@ -557,4 +557,32 @@ def Tickets(request):
     upcoming_journeys = {'tickets': r}  # Assuming r is a list of dictionaries
     return render(request, 'ticket.html', upcoming_journeys)
 
-        
+
+def profile(request):
+    try:
+        user = usrer_info
+        print("userifo defined")
+    except:
+        alert_message = "Please Login first"
+        return render(request, 'login.html', {'alert_message': alert_message})
+    # user = user.all_details()
+    user = user.all_details()
+    d = {}
+    print(user)
+    d["userid"] = user[0][0]
+    d["email"] = user[0][1]
+    d["name"] = user[0][2]
+    d["phone"] = user[0][3]
+    d["gender"] = user[0][4]
+    d["house_no"] = user[0][5]
+    d["city"] = user[0][6]
+    d["Pincode"] = user[0][7]
+    d["dob"] = user[0][8]
+    d["age"] = calculate_age(d["dob"]) # calculate please
+    print(d)
+    return render(request,"profile.html",{'user':d})
+
+def logout(request):
+    global usrer_info
+    del usrer_info 
+    return redirect("http://127.0.0.1:8000/")
