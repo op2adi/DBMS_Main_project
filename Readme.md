@@ -39,8 +39,12 @@ This project includes various functionalities related to managing user accounts,
     ```bash
     cd DBMS_Main_project/
     ```
+    ```
+    cd Tripsync
+    ```
 
 4. Configure the MySQL database settings in the code according to your setup.
+
 
 5. Start the Django development server:
 
