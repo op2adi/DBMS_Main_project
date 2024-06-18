@@ -70,9 +70,7 @@ This project includes various functionalities related to managing user accounts,
 ## Contributors
 
 - Aditya Upadhyay
-- Keshav Chhabra
 - Dev Utkarsh
-- Mann Nariya
 
 ## Special Thanks
 - Mukesh Mohaniya Sir
