@@ -96,12 +96,10 @@ def authenticate1(request, username, password):
         #     adi_conn.execute("UPDATE userids_passwords SET tries = 0, is_locked = 'T', attempt_time = %s WHERE userid = %s", (time.strftime('%Y-%m-%d %H:%M:%S'), username))
         #     adi_conn1.commit()
         #     return False
-        if 1==1:
             # Update the number of tries for the user
-            adi_conn.execute("UPDATE userids_passwords SET tries = %s WHERE userid = %s", (tries, username))
-            adi_conn1.commit()
-            print("HULA")
-
+        adi_conn.execute("UPDATE userids_passwords SET tries = %s WHERE userid = %s", (tries, username))
+        adi_conn1.commit()
+        # print("HULA")
         return False
 
 def create_user(username, password):
